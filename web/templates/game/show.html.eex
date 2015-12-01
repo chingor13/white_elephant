@@ -1,8 +1,23 @@
-<h2>Show game</h2>
+<h2><%= @game.name %></h2>
 
-<ul>
-
-</ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Steals</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pyrex Mixing Bowls</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Bathmat</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
 
 <%= link "Edit", to: game_path(@conn, :edit, @game) %>
 <%= link "Back", to: game_path(@conn, :index) %>

@@ -1,0 +1,8 @@
+<h2>Show item</h2>
+
+<ul>
+
+</ul>
+
+<%= link "Edit", to: item_path(@conn, :edit, @item) %>
+<%= link "Back", to: item_path(@conn, :index) %>

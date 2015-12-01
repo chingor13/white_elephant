@@ -5,7 +5,7 @@ defmodule WhiteElephant.Repo.Migrations.CreateGame do
     create table(:games) do
       add :name, :string
       add :code, :string
-      add :max_steals, :integer
+      add :max_steals, :integer, default: 0
       add :date, :date
       timestamps
     end
