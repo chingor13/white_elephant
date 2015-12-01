@@ -3,6 +3,7 @@ defmodule WhiteElephant.ItemController do
 
   alias WhiteElephant.Item
 
+  plug :load_game
   plug :scrub_params, "item" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -22,7 +23,7 @@ defmodule WhiteElephant.ItemController do
       {:ok, _item} ->
         conn
         |> put_flash(:info, "Item created successfully.")
-        |> redirect(to: item_path(conn, :index))
+        |> redirect(to: game_item_path(conn, :index, conn.assigns[:game]))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -47,7 +48,7 @@ defmodule WhiteElephant.ItemController do
       {:ok, item} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
-        |> redirect(to: item_path(conn, :show, item))
+        |> redirect(to: game_item_path(conn, :show, conn.assigns[:game], item))
       {:error, changeset} ->
         render(conn, "edit.html", item: item, changeset: changeset)
     end
@@ -62,6 +63,13 @@ defmodule WhiteElephant.ItemController do
 
     conn
     |> put_flash(:info, "Item deleted successfully.")
-    |> redirect(to: item_path(conn, :index))
+    |> redirect(to: game_item_path(conn, :index, conn.assigns(:game)))
+  end
+
+  defp load_game(conn, _) do
+    game = Repo.get!(WhiteElephant.Game, conn.params["game_id"])
+
+    conn
+      |> assign(:game, game)
   end
 end

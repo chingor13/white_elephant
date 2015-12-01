@@ -12,13 +12,13 @@
     <tr>
 
       <td class="text-right">
-        <%= link "Show", to: item_path(@conn, :show, item), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: item_path(@conn, :edit, item), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%#= link "Show", to: item_path(@conn, :show, item), class: "btn btn-default btn-xs" %>
+        <%#= link "Edit", to: item_path(@conn, :edit, item), class: "btn btn-default btn-xs" %>
+        <%#= link "Delete", to: item_path(@conn, :delete, item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New item", to: item_path(@conn, :new) %>
+<%#= link "New item", to: item_path(@conn, :new) %>

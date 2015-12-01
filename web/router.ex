@@ -16,8 +16,9 @@ defmodule WhiteElephant.Router do
   scope "/", WhiteElephant do
     pipe_through :browser # Use the default browser stack
 
-    resources "/games", GameController
-    resources "/items", ItemController
+    resources "/games", GameController do
+      resources "/items", ItemController
+    end
 
     get "/", PageController, :index
   end

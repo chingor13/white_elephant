@@ -2,11 +2,12 @@ defmodule WhiteElephant.Item do
   use WhiteElephant.Web, :model
 
   schema "items" do
-
+    belongs_to :game, WhiteElephant.Game
+    field :name, :string
     timestamps
   end
 
-  @required_fields ~w()
+  @required_fields ~w(name)
   @optional_fields ~w()
 
   @doc """

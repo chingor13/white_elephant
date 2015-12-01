@@ -6,6 +6,7 @@ defmodule WhiteElephant.Game do
     field :code, :string
     field :max_steals, :integer
     field :date, Ecto.Date
+    has_many :items, WhiteElephant.Item
     timestamps
   end
 
