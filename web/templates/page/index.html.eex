@@ -1,5 +1,13 @@
 <div class="jumbotron">
   <h2>Welcome to White Elephant!</h2>
   <p class="lead">Your white elephant give exchange &mdash; better.</p>
-  <%= link "Get started", to: game_path(@conn, :index), class: "btn btn-lg btn-success" %>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <%= link "Start a Game", to: game_path(@conn, :index), class: "btn btn-lg btn-success" %>
+  </div>
+  <div class="col-sm-6">
+    <a href="#" class="btn btn-lg btn-info">Find a Game</a>
+  </div>
 </div>

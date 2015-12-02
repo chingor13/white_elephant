@@ -7,8 +7,8 @@ defmodule WhiteElephant.ItemController do
   plug :load_game
 
   def index(conn, _params) do
-    items = Repo.all(Item)
-    render(conn, "index.html", items: items)
+    game = conn |> get_game |> Repo.preload(:items)
+    render(conn, "index.html", items: game.items)
   end
 
   def new(conn, _params) do

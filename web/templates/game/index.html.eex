@@ -5,6 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Date</th>
+      <th>Code</th>
       <th></th>
     </tr>
   </thead>
@@ -16,6 +17,11 @@
       </td>
       <td>
         <%= game.date %>
+      </td>
+      <td>
+        <%= if game.code do %>
+          <%= link game.code, to: play_path(@conn, :play, game.code) %>
+        <% end %>
       </td>
       <td class="text-right">
         <%= link "Delete", to: game_path(@conn, :delete, game), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
