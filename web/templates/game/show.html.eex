@@ -1,8 +1,13 @@
 <h2>Admin for <%= @game.name %> <small>(<%= @game.date %>)</small></h2>
 
-<%= link "Back", to: game_path(@conn, :index), class: "btn btn-default" %>
-
 <div id="game" data-game="<%=@game.code%>">
+  <form id="new_item" action="#" class="form-inline">
+    <div class="form-group">
+      <input class="form-control" type="text" name="item[name]" placeholder="New Item" />
+      <a href="#" class="btn btn-success">Add Item</a>
+    </div>
+  </form>
+
   <table class="table">
     <thead>
       <tr>
@@ -29,12 +34,5 @@
       <% end %>
     </tbody>
   </table>
-
-  <form id="new_item" action="#" class="form-inline">
-    <div class="form-group">
-      <input class="form-control" type="text" name="item[name]" placeholder="New Item"/>
-    </div>
-    <a href="#" class="btn btn-success">Add Item</a>
-  </form>
 </div>
 <script src="<%= static_path(@conn, "/js/game.js") %>"></script>
