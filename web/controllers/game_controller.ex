@@ -19,7 +19,7 @@ defmodule WhiteElephant.GameController do
 
   def create(conn, %{"game" => game_params}) do
     changeset = Game.changeset(%Game{}, game_params)
-    
+
     case Repo.insert(changeset) do
       {:ok, _game} ->
         conn

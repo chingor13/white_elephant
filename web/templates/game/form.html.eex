@@ -22,7 +22,7 @@
   
   <div class="form-group">
     <label for="game_date">Date</label>
-    <%= text_input f, :date, class: "form-control" %>
+    <%= text_input f, :date, class: "form-control"  %>
   </div>
 
   <div class="form-group">
