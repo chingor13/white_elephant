@@ -9,6 +9,10 @@ defmodule WhiteElephant.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :admin do
+    # plug :ensure_logged_in
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -16,11 +20,16 @@ defmodule WhiteElephant.Router do
   scope "/", WhiteElephant do
     pipe_through :browser # Use the default browser stack
 
+    get "/play/:game_code", PlayController, :play
+
+    get "/", PageController, :index
+  end
+
+  scope "/admin", WhiteElephant do
+    pipe_through [:browser, :admin]
     resources "/games", GameController do
       resources "/items", ItemController
     end
-
-    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.

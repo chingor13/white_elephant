@@ -4,6 +4,7 @@ defmodule WhiteElephant.Item do
   schema "items" do
     belongs_to :game, WhiteElephant.Game
     field :name, :string
+    field :steals, :integer, default: 0
     timestamps
   end
 
@@ -19,5 +20,11 @@ defmodule WhiteElephant.Item do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+  end
+
+  def for_game(query, game) do
+    from i in query,
+      join: g in assoc(i, :game),
+      where: g.id == ^game.id
   end
 end
