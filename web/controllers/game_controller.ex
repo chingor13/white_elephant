@@ -13,21 +13,20 @@ defmodule WhiteElephant.GameController do
 
   def new(conn, _params) do
     timestamp = conn |> now
-    changeset = Game.changeset(%Game{})
-    render(conn, "new.html", changeset: changeset, timestamp: timestamp)
+    changeset = Game.changeset(%Game{}, %{date: timestamp})
+    render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"game" => game_params}) do
     changeset = Game.changeset(%Game{}, game_params)
-    timestamp = conn |> now
-
+    
     case Repo.insert(changeset) do
       {:ok, _game} ->
         conn
         |> put_flash(:info, "Game created successfully.")
         |> redirect(to: game_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset, timestamp: timestamp)
+        render(conn, "new.html", changeset: changeset)
     end
   end
 
@@ -70,6 +69,6 @@ defmodule WhiteElephant.GameController do
   end
 
   def now(conn) do
-    Date.universal |> DateFormat.format("%Y-%m-%d", :strftime) |> elem(1)
+    Date.now |> DateFormat.format("%Y-%m-%d", :strftime) |> elem(1)
   end
 end
