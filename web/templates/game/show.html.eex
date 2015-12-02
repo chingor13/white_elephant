@@ -8,6 +8,7 @@
       <tr>
         <th>Item</th>
         <th>Steals</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -18,6 +19,11 @@
           <a href="#" class="btn btn-default">+</a>
           <%= item.steals %>
           <a href="#" class="btn btn-default">-</a>
+        </td>
+        <td>
+          <div class='pull-right'>
+            <%= link "Delete", to: game_item_path(@conn, :delete, @conn.assigns[:game], item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+          </div>
         </td>
       </tr>
       <% end %>
