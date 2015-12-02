@@ -19,10 +19,10 @@
     <label for="game_max_steals">Max Steals</label>
     <%= text_input f, :max_steals, class: "form-control"  %>
   </div>
-
+  
   <div class="form-group">
     <label for="game_date">Date</label>
-    <%= text_input f, :date, class: "form-control"  %>
+    <%= text_input f, :date, class: "form-control", value: @timestamp %>
   </div>
 
   <div class="form-group">

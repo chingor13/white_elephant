@@ -1,5 +1,6 @@
 defmodule WhiteElephant.GameController do
   use WhiteElephant.Web, :controller
+  use Timex
 
   alias WhiteElephant.Game
 
@@ -11,12 +12,14 @@ defmodule WhiteElephant.GameController do
   end
 
   def new(conn, _params) do
+    timestamp = conn |> now
     changeset = Game.changeset(%Game{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html", changeset: changeset, timestamp: timestamp)
   end
 
   def create(conn, %{"game" => game_params}) do
     changeset = Game.changeset(%Game{}, game_params)
+    timestamp = conn |> now
 
     case Repo.insert(changeset) do
       {:ok, _game} ->
@@ -24,7 +27,7 @@ defmodule WhiteElephant.GameController do
         |> put_flash(:info, "Game created successfully.")
         |> redirect(to: game_path(conn, :index))
       {:error, changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, timestamp: timestamp)
     end
   end
 
@@ -64,5 +67,9 @@ defmodule WhiteElephant.GameController do
     conn
     |> put_flash(:info, "Game deleted successfully.")
     |> redirect(to: game_path(conn, :index))
+  end
+
+  def now(conn) do
+    Date.universal |> DateFormat.format("%Y-%m-%d", :strftime) |> elem(1)
   end
 end
