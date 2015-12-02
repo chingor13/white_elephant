@@ -1,11 +1,11 @@
 let Game = {
 
-  init(domId) {
-
+  init(domId, gameCode) {
+    console.log('starting game', gameCode)
   },
 
-  addItem(name) {
-
+  addItem(item) {
+    console.log('adding item', item)
   }
 
 }
