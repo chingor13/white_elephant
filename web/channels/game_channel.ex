@@ -16,10 +16,7 @@ defmodule WhiteElephant.GameChannel do
 
     case Repo.insert(changeset) do
       {:ok, item} ->
-        broadcast! socket, "new_item", %{
-          name: item.name,
-          steals: item.steals
-        }
+        broadcast! socket, "new_item", WhiteElephant.ItemView.render("item.json", %{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
