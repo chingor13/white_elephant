@@ -69,6 +69,7 @@ defmodule WhiteElephant.GameController do
   end
 
   def now(conn) do
+    # This doesn't appear to take dst into account
     Date.now |> DateFormat.format("%Y-%m-%d", :strftime) |> elem(1)
   end
 end
