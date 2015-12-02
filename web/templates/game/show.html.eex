@@ -1,5 +1,7 @@
 <h2>Admin for <%= @game.name %> <small>(<%= @game.date %>)</small></h2>
 
+<%= link "Back", to: game_path(@conn, :index), class: "btn btn-default" %>
+
 <table class="table">
   <thead>
     <tr>
@@ -21,7 +23,10 @@
   </tbody>
 </table>
 
-<%= link "New item", to: game_item_path(@conn, :new, @conn.assigns[:game]) %>
+<form id="new_item" action="#" class="form-inline">
+  <div class="form-group">
+    <input class="form-control" type="text" name="item[name]" placeholder="New Item"/>
+  </div>
+  <a href="#" class="btn btn-sm btn-success">Add Item</a>
+</form>
 
-<%= link "Edit", to: game_path(@conn, :edit, @game) %>
-<%= link "Back", to: game_path(@conn, :index) %>
