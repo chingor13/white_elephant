@@ -24,11 +24,13 @@ import Game from "./game"
 
 import PlayGame from "./play_game"
 
+// admin controls
 let game = document.getElementById("game")
 if(game) {
   Game.init(game, socket)
 }
 
+// viewer
 let playGame = document.getElementById("play_game")
 if(playGame) {
   PlayGame.init(playGame, socket)
