@@ -3,4 +3,4 @@
 <%= render "form.html", changeset: @changeset,
                         action: game_item_path(@conn, :create, @conn.assigns[:game]) %>
 
-<%= link "Back", to: game_item_path(@conn, :index, @conn.assigns[:game]) %>
+<%= link "Back", to: game_item_path(@conn, :index, @conn.assigns[:game]), class: "btn btn-default" %>
