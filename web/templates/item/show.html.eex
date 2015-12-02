@@ -1,8 +1,0 @@
-<h2>Show item</h2>
-
-<ul>
-  <li><%= @item.name %> (<%= @item.steals %>)</li>
-</ul>
-
-<%= link "Edit", to: game_item_path(@conn, :edit, @conn.assigns[:game], @item) %>
-<%= link "Back", to: game_item_path(@conn, :index, @conn.assigns[:game]) %>

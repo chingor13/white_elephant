@@ -6,11 +6,6 @@ defmodule WhiteElephant.ItemController do
   plug :scrub_params, "item" when action in [:create, :update]
   plug :load_game
 
-  def index(conn, _params) do
-    game = conn |> get_game |> Repo.preload(:items)
-    render(conn, "index.html", items: game.items)
-  end
-
   def new(conn, _params) do
     item = conn |> get_game |> Ecto.Model.build(:items)
     changeset = Item.changeset(item)
@@ -25,15 +20,10 @@ defmodule WhiteElephant.ItemController do
       {:ok, _item} ->
         conn
         |> put_flash(:info, "Item created successfully.")
-        |> redirect(to: game_item_path(conn, :index, conn.assigns[:game]))
+        |> redirect(to: game_path(conn, :show, conn.assigns[:game]))
       {:error, changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def show(conn, %{"id" => _id}) do
-    item = conn |> find_item
-    render(conn, "show.html", item: item)
   end
 
   def edit(conn, %{"id" => _id}) do
@@ -50,7 +40,7 @@ defmodule WhiteElephant.ItemController do
       {:ok, item} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
-        |> redirect(to: game_item_path(conn, :show, conn.assigns[:game], item))
+        |> redirect(to: game_path(conn, :show, conn.assigns[:game]))
       {:error, changeset} ->
         render(conn, "edit.html", item: item, changeset: changeset)
     end
@@ -65,7 +55,7 @@ defmodule WhiteElephant.ItemController do
 
     conn
     |> put_flash(:info, "Item deleted successfully.")
-    |> redirect(to: game_item_path(conn, :index, conn.assigns[:game]))
+    |> redirect(to: game_path(conn, :show, conn.assigns[:game]))
   end
 
   defp load_game(conn, _) do
