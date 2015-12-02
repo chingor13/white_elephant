@@ -1,10 +1,18 @@
 <h1><%= @game.name %> <small>(<%= @game.date %>)</small></h1>
 
-<ul>
-  <%= for item <- @game.items do %>
-    <li>
-      <%= item.name %>
-      <span class="label label-info"><%= item.steals %></span>
-    </li>
-  <% end %>
-</ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Steals</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for item <- @game.items do %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.steals %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
