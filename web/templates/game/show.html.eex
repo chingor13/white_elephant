@@ -16,13 +16,13 @@
       <tr>
         <td><%= item.name %></td>
         <td>
-          <a href="#" class="btn btn-default">+</a>
-          <%= item.steals %>
           <a href="#" class="btn btn-default">-</a>
+          <%= item.steals %>
+          <a href="#" class="btn btn-default">+</a>
         </td>
         <td>
           <div class='pull-right'>
-            <%= link "Delete", to: game_item_path(@conn, :delete, @conn.assigns[:game], item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+            <%= link "Delete", to: game_item_path(@conn, :delete, @conn.assigns[:game], item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>
           </div>
         </td>
       </tr>
@@ -34,7 +34,7 @@
     <div class="form-group">
       <input class="form-control" type="text" name="item[name]" placeholder="New Item"/>
     </div>
-    <a href="#" class="btn btn-sm btn-success">Add Item</a>
+    <a href="#" class="btn btn-success">Add Item</a>
   </form>
 </div>
 <script src="<%= static_path(@conn, "/js/game.js") %>"></script>
