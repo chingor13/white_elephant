@@ -2,7 +2,7 @@ defmodule WhiteElephant.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", WhiteElephant.RoomChannel
+  channel "games:*", WhiteElephant.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
