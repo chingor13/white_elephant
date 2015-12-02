@@ -24,7 +24,7 @@
         <% end %>
       </td>
       <td class="text-right">
-        <%= link "Delete", to: game_path(@conn, :delete, game), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Delete", to: game_path(@conn, :delete, game), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>
       </td>
     </tr>
   <% end %>
