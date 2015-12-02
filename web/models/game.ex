@@ -32,11 +32,13 @@ defmodule WhiteElephant.Game do
     |> validate_number(:max_steals, greater_than_or_equal_to: 0)
   end
 
+  @doc """
+  Generates a random code for the model if one isn't already set
+  """
   defp set_default_code(changeset) do
     case fetch_field(changeset, :code) do
       {:model, nil} ->
-        random_code = random_string(6)
-        put_change(changeset, :code, random_code)
+        put_change(changeset, :code, random_string(6))
       _ ->
         changeset
     end
