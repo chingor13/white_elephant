@@ -22,7 +22,14 @@ import socket from "./socket"
 
 import Game from "./game"
 
-let game = document.getElementById("game");
+import PlayGame from "./play_game"
+
+let game = document.getElementById("game")
 if(game) {
-  Game.init(game.id, game.getAttribute("data-game"))
+  Game.init(game, socket)
+}
+
+let playGame = document.getElementById("play_game")
+if(playGame) {
+  PlayGame.init(playGame, socket)
 }

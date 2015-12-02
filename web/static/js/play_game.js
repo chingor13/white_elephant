@@ -1,4 +1,4 @@
-let Game = {
+let PlayGame = {
   socket: null,
   code: null,
 
@@ -21,4 +21,4 @@ let Game = {
   }
 
 }
-export default Game
+export default PlayGame
