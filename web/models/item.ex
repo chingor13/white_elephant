@@ -4,7 +4,7 @@ defmodule WhiteElephant.Item do
   schema "items" do
     belongs_to :game, WhiteElephant.Game
     field :name, :string
-    field :steals, :integer
+    field :steals, :integer, default: 0
     timestamps
   end
 
