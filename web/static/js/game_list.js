@@ -2,6 +2,23 @@ class GameList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {items: props.initialItems}
+    this.gameId = props.gameId
+    this.socket = props.socket
+    this.channel = this.socket.channel("games:" + this.gameId, {})
+    this.channel.join()
+      .receive("ok", resp => { console.log("Joined successfully", resp) })
+      .receive("error", resp => { console.log("Unable to join", resp) })
+    this.channel.on("new_item", payload => {
+      console.log("got new item")
+      console.log(payload)
+      this.addItem(payload)
+    })
+  }
+
+  addItem(item) {
+    let items = this.state.items
+    items.push(item)
+    this.setState({items: items})
   }
 
   render() {
@@ -21,7 +38,7 @@ class GameList extends React.Component {
             )}
           </tbody>
         </table>
-        <ItemForm />
+        <ItemForm channel={this.channel} />
       </div>
     );
   }
@@ -42,11 +59,24 @@ class GameLine extends React.Component {
 }
 
 class ItemForm extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {name: ""}
+  }
+  handleSubmit(evt) {
+    this.props.channel.push('create_item', this.state)
+    this.setState({name: ""})
+    evt.preventDefault()
+  }
+  handleChange(event) {
+    this.setState({name: event.target.value});
+  }
   render() {
+    let boundHandler = this.handleSubmit.bind(this)
     return (
-      <form className="form-inline">
+      <form className="form-inline" onSubmit={boundHandler}>
         <div className="form-group">
-          <input className="form-control" placeholder="New Item"/>
+          <input className="form-control" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="New Item"/>
         </div>
         <input type="submit" value="Add Item" className="btn btn-sm btn-success"/>
       </form>

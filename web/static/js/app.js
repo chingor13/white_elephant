@@ -20,14 +20,17 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 
 import socket from "./socket"
 
-import Game from "./game"
+import GameList from "./game_list"
 
 import PlayGame from "./play_game"
 
 // admin controls
 let game = document.getElementById("game_container")
 if(game) {
-  Game.init(game, socket)
+  ReactDOM.render(
+    <GameList socket={socket} gameId={game.getAttribute('data-game-id')} initialItems={window.items}/>,
+    game
+  )
 }
 
 // viewer
