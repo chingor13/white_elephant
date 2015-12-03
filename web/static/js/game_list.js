@@ -65,8 +65,9 @@ class GameLine extends React.Component {
       }
     })
   }
+
   componentWillReceiveProps(props) {
-    this.state = {name: props.name, steals: props.steals}
+    this.setState({name: props.name, steals: props.steals})
   }
 
   delete(evt) {
@@ -103,14 +104,17 @@ class ItemForm extends React.Component {
     this.channel = props.channel
     this.state = {name: ""}
   }
+
   handleSubmit(evt) {
     this.channel.push('create_item', this.state)
     this.setState({name: ""})
     evt.preventDefault()
   }
+
   handleChange(event) {
     this.setState({name: event.target.value});
   }
+
   render() {
     return (
       <form className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
