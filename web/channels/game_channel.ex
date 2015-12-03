@@ -16,7 +16,19 @@ defmodule WhiteElephant.GameChannel do
 
     case Repo.insert(changeset) do
       {:ok, item} ->
-        broadcast! socket, "new_item", WhiteElephant.ItemView.render("item.json", %{item: item})
+        broadcast! socket, "item_created", WhiteElephant.ItemView.render("item.json", %{item: item})
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: changeset}}, socket}
+    end
+  end
+
+  def handle_in("remove_item", %{"id" => item_id}, socket) do
+    item = WhiteElephant.Item.find_by_game_and_id(socket.assigns.game, item_id)
+
+    case Repo.delete(item) do
+      {:ok, item} ->
+        broadcast! socket, "item_deleted", WhiteElephant.ItemView.render("item.json", %{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}

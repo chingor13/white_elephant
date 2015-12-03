@@ -4,20 +4,30 @@ class GameList extends React.Component {
     this.state = {items: props.initialItems}
     this.gameId = props.gameId
     this.socket = props.socket
+
+    // connect to the channel for this game
     this.channel = this.socket.channel("games:" + this.gameId, {})
     this.channel.join()
       .receive("ok", resp => { console.log("Joined successfully", resp) })
       .receive("error", resp => { console.log("Unable to join", resp) })
-    this.channel.on("new_item", payload => {
-      console.log("got new item")
-      console.log(payload)
-      this.addItem(payload)
-    })
+
+    // listen to channel events and modify the view
+    this.channel.on("item_created", this.addItem.bind(this))
+    this.channel.on("item_deleted", this.removeItem.bind(this))
   }
 
   addItem(item) {
     let items = this.state.items
     items.push(item)
+    this.setState({items: items})
+  }
+
+  removeItem(itemToRemove) {
+    console.log(itemToRemove, itemToRemove.id)
+    let items = this.state.items.filter((item, i) =>
+      itemToRemove.id !== item.id
+    );
+    console.log(items)
     this.setState({items: items})
   }
 
@@ -34,7 +44,7 @@ class GameList extends React.Component {
           </thead>
           <tbody>
             {this.state.items.map((item, i) =>
-              <GameLine id={item.id} name={item.name} steals={item.steals} />
+              <GameLine channel={this.channel} id={item.id} name={item.name} steals={item.steals} />
             )}
           </tbody>
         </table>
@@ -45,14 +55,26 @@ class GameList extends React.Component {
 }
 
 class GameLine extends React.Component {
+  constructor(props) {
+    super(props)
+    this.channel = props.channel
+    this.state = {name: props.name, steals: props.steals}
+  }
+  delete(evt) {
+    console.log(this)
+    let itemId = this.props.id
+    console.log('should delete', this, itemId)
+    this.channel.push('remove_item', {id: itemId})
+    evt.preventDefault()
+  }
   render() {
     return (
       <tr>
-        <td>{this.props.name}</td>
+        <td>{this.state.name} ({this.props.id})</td>
         <td>
-          <a className="btn btn-default">-</a> {this.props.steals} <a className="btn btn-default">+</a>
+          <a className="btn btn-default">-</a> {this.state.steals} <a className="btn btn-default">+</a>
         </td>
-        <td className="text-right"><a className="btn btn-danger">Delete</a></td>
+        <td className="text-right"><a className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</a></td>
       </tr>
     )
   }
@@ -61,10 +83,11 @@ class GameLine extends React.Component {
 class ItemForm extends React.Component {
   constructor(props) {
     super(props)
+    this.channel = props.channel
     this.state = {name: ""}
   }
   handleSubmit(evt) {
-    this.props.channel.push('create_item', this.state)
+    this.channel.push('create_item', this.state)
     this.setState({name: ""})
     evt.preventDefault()
   }
@@ -72,9 +95,8 @@ class ItemForm extends React.Component {
     this.setState({name: event.target.value});
   }
   render() {
-    let boundHandler = this.handleSubmit.bind(this)
     return (
-      <form className="form-inline" onSubmit={boundHandler}>
+      <form className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
         <div className="form-group">
           <input className="form-control" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="New Item"/>
         </div>
