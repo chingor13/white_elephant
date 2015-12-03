@@ -21,7 +21,6 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 import socket from "./socket"
 
 import Game from "./game"
-import GameList from "./game_list"
 
 import PlayGame from "./play_game"
 

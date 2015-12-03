@@ -5,7 +5,7 @@ let Game = {
     this.gameId = el.getAttribute('data-game-id')
 
     // logger
-    this.socket.logger = (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) };
+    // this.socket.logger = (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) };
 
     console.log('starting game', this.gameId)
 
@@ -23,7 +23,7 @@ let Game = {
 
     // draw the game
     ReactDOM.render(
-      <GameList socket={socket} gameId={this.gameId} data={window.items}/>,
+      <GameList socket={socket} gameId={this.gameId} initialItems={window.items}/>,
       el
     )
 

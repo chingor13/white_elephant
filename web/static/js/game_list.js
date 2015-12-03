@@ -1,10 +1,10 @@
 class GameList extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {items: props.initialItems}
+  }
+
   render() {
-    let gameLines = this.props.data.map(function(item) {
-      return (
-        <GameLine id={item.id} name={item.name} steals={item.steals} />
-      )
-    })
     return (
       <div>
         <table className="table">
@@ -16,7 +16,9 @@ class GameList extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {gameLines}
+            {this.state.items.map((item, i) =>
+              <GameLine id={item.id} name={item.name} steals={item.steals} />
+            )}
           </tbody>
         </table>
         <ItemForm />
