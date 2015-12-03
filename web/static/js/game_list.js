@@ -8,12 +8,12 @@ class GameList extends React.Component {
     // connect to the channel for this game
     this.channel = this.socket.channel("games:" + this.gameId, {})
     this.channel.join()
-      .receive("ok", resp => { console.log("Joined successfully", resp) })
+      .receive("ok", resp => { 
+        // listen to channel events and modify the view
+        this.channel.on("item_created", this.addItem.bind(this))
+        this.channel.on("item_deleted", this.removeItem.bind(this))
+      })
       .receive("error", resp => { console.log("Unable to join", resp) })
-
-    // listen to channel events and modify the view
-    this.channel.on("item_created", this.addItem.bind(this))
-    this.channel.on("item_deleted", this.removeItem.bind(this))
   }
 
   addItem(item) {
@@ -23,11 +23,9 @@ class GameList extends React.Component {
   }
 
   removeItem(itemToRemove) {
-    console.log(itemToRemove, itemToRemove.id)
     let items = this.state.items.filter((item, i) =>
       itemToRemove.id !== item.id
     );
-    console.log(items)
     this.setState({items: items})
   }
 
@@ -57,22 +55,41 @@ class GameList extends React.Component {
 class GameLine extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {name: props.name, steals: props.steals}
+
+    // listen for updates to this item
     this.channel = props.channel
+    this.channel.on("item_updated", (resp) => {
+      if(this.props.id == resp.id) {
+        this.setState({name: resp.name, steals: resp.steals})
+      }
+    })
+  }
+  componentWillReceiveProps(props) {
     this.state = {name: props.name, steals: props.steals}
   }
+
   delete(evt) {
-    console.log(this)
-    let itemId = this.props.id
-    console.log('should delete', this, itemId)
-    this.channel.push('remove_item', {id: itemId})
+    this.channel.push('remove_item', {id: this.props.id})
     evt.preventDefault()
   }
+
+  increment(evt){
+    this.channel.push('steal_item', {id: this.props.id})
+    evt.preventDefault()
+  }
+
+  decrement(evt){
+    this.channel.push('undo_steal_item', {id: this.props.id})
+    evt.preventDefault()
+  }
+
   render() {
     return (
       <tr>
         <td>{this.state.name} ({this.props.id})</td>
         <td>
-          <a className="btn btn-default">-</a> {this.state.steals} <a className="btn btn-default">+</a>
+          <a className="btn btn-default" onClick={this.decrement.bind(this)}>-</a> {this.state.steals} <a className="btn btn-default" onClick={this.increment.bind(this)}>+</a>
         </td>
         <td className="text-right"><a className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</a></td>
       </tr>

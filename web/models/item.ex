@@ -37,4 +37,9 @@ defmodule WhiteElephant.Item do
       |> Ecto.Query.where([i], i.game_id == ^game_id)
       |> WhiteElephant.Repo.one!
   end
+
+  def increment(model, steal_increment \\ 1) do
+    model
+      |> change(%{steals: model.steals + steal_increment})
+  end
 end
