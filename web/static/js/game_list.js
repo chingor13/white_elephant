@@ -12,6 +12,7 @@ class GameList extends React.Component {
         // listen to channel events and modify the view
         this.channel.on("item_created", this.addItem.bind(this))
         this.channel.on("item_deleted", this.removeItem.bind(this))
+        this.channel.on("item_updated", this.updateItem.bind(this))
       })
       .receive("error", resp => { console.log("Unable to join", resp) })
   }
@@ -26,6 +27,17 @@ class GameList extends React.Component {
     let items = this.state.items.filter((item, i) =>
       itemToRemove.id !== item.id
     );
+    this.setState({items: items})
+  }
+
+  updateItem(itemToUpdate) {
+    let items = this.state.items.map((item, i) =>  {
+      if(item.id == itemToUpdate.id) {
+        return itemToUpdate
+      } else {
+        return item
+      }
+    });
     this.setState({items: items})
   }
 
@@ -59,11 +71,6 @@ class GameLine extends React.Component {
 
     // listen for updates to this item
     this.channel = props.channel
-    this.channel.on("item_updated", (resp) => {
-      if(this.props.id == resp.id) {
-        this.setState({name: resp.name, steals: resp.steals})
-      }
-    })
   }
 
   componentWillReceiveProps(props) {
