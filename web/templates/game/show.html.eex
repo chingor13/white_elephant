@@ -3,13 +3,4 @@
 <script type="text/javascript">
 window.items = <%= raw render("items.json", game: @game) %>;
 </script>
-<div id="game_container"></div>
-
-<div id="game" data-game="<%=@game.id%>">
-  <form id="new_item" action="<%= game_item_path(@conn, :create, @conn.assigns[:game]) %>" class="form-inline">
-    <div class="form-group">
-      <input class="form-control" type="text" name="item[name]" placeholder="New Item"/>
-    </div>
-    <input type="submit" value="Add Item" class="btn btn-sm btn-success"/>
-  </form>
-</div>
+<div id="game_container" data-game-id="<%= @game.id %>"></div>

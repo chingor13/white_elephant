@@ -6,21 +6,25 @@ class GameList extends React.Component {
       )
     })
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Steals</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {gameLines}
-        </tbody>
-      </table>
+      <div>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Steals</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {gameLines}
+          </tbody>
+        </table>
+        <ItemForm />
+      </div>
     );
   }
 }
+
 class GameLine extends React.Component {
   render() {
     return (
@@ -31,6 +35,19 @@ class GameLine extends React.Component {
         </td>
         <td className="text-right"><a className="btn btn-danger">Delete</a></td>
       </tr>
+    )
+  }
+}
+
+class ItemForm extends React.Component {
+  render() {
+    return (
+      <form className="form-inline">
+        <div className="form-group">
+          <input className="form-control" placeholder="New Item"/>
+        </div>
+        <input type="submit" value="Add Item" className="btn btn-sm btn-success"/>
+      </form>
     )
   }
 }

@@ -1,16 +1,13 @@
+import GameList from "./game_list"
 let Game = {
   init(el, socket) {
     this.socket = socket
-    this.el = $(el)
-    this.gameId = $(el).data('game')
+    this.gameId = el.getAttribute('data-game-id')
 
     // logger
     this.socket.logger = (kind, msg, data) => { console.log(`${kind}: ${msg}`, data) };
 
     console.log('starting game', this.gameId)
-
-    // attach form listener
-    this.el.find('#new_item').on('submit', this._handleSubmit)
 
     // listen to the channel
     this.channel = socket.channel("games:" + this.gameId, {})
@@ -23,15 +20,13 @@ let Game = {
       console.log(payload)
       this.addItem(payload)
     })
-  },
 
-  _handleSubmit(evt) {
-    let itemName = $(this).find("[name='item[name]']").val()
-    if(itemName != "") {
-      Game.channel.push("create_item", {name: itemName})
-    }
+    // draw the game
+    ReactDOM.render(
+      <GameList socket={socket} gameId={this.gameId} data={window.items}/>,
+      el
+    )
 
-    evt.preventDefault()
   },
 
   addItem(item) {
