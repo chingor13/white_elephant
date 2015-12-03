@@ -1,20 +1,6 @@
 <h1><%= @game.name %> <small>(<%= @game.date %>)</small></h1>
 
-<div id="play_game">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Steals</th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= for item <- @game.items do %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= item.steals %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<script type="text/javascript">
+window.items = <%= raw render("items.json", game: @game) %>;
+</script>
+<div id="game_viewer" data-game-id="<%= @game.id %>"></div>

@@ -22,19 +22,28 @@ import socket from "./socket"
 
 import GameList from "./game_list"
 
-import PlayGame from "./play_game"
+import GameViewer from "./game_viewer"
 
 // admin controls
 let game = document.getElementById("game_container")
 if(game) {
   ReactDOM.render(
-    <GameList socket={socket} gameId={game.getAttribute('data-game-id')} initialItems={window.items}/>,
+    <GameList
+      socket={socket}
+      gameId={game.getAttribute('data-game-id')}
+      initialItems={window.items} />,
     game
   )
 }
 
 // viewer
-let playGame = document.getElementById("play_game")
-if(playGame) {
-  PlayGame.init(playGame, socket)
+let gameViewer = document.getElementById("game_viewer")
+if(gameViewer) {
+  ReactDOM.render(
+    <GameViewer
+      socket={socket}
+      gameId={gameViewer.getAttribute('data-game-id')}
+      initialItems={window.items} />,
+    gameViewer
+  )
 }
