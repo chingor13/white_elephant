@@ -21,6 +21,7 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 import socket from "./socket"
 
 import Game from "./game"
+import GameList from "./game_list"
 
 import PlayGame from "./play_game"
 
@@ -34,4 +35,12 @@ if(game) {
 let playGame = document.getElementById("play_game")
 if(playGame) {
   PlayGame.init(playGame, socket)
+}
+
+let adminGame = document.getElementById("game_container")
+if(adminGame) {
+  ReactDOM.render(
+    <GameList data={window.items}/>,
+    adminGame
+  )
 }

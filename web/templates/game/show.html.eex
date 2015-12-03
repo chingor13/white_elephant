@@ -1,33 +1,11 @@
 <h2>Admin for <%= @game.name %> <small>(<%= @game.date %>)</small></h2>
 
-<div id="game" data-game="<%=@game.id%>">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Item</th>
-        <th>Steals</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= for item <- @game.items do %>
-      <tr>
-        <td><%= item.name %></td>
-        <td>
-          <a href="#" class="btn btn-default">-</a>
-          <%= item.steals %>
-          <a href="#" class="btn btn-default">+</a>
-        </td>
-        <td>
-          <div class='pull-right'>
-            <%= link "Delete", to: game_item_path(@conn, :delete, @conn.assigns[:game], item), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>
-          </div>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+<script type="text/javascript">
+window.items = <%= raw render("items.json", game: @game) %>;
+</script>
+<div id="game_container"></div>
 
+<div id="game" data-game="<%=@game.id%>">
   <form id="new_item" action="<%= game_item_path(@conn, :create, @conn.assigns[:game]) %>" class="form-inline">
     <div class="form-group">
       <input class="form-control" type="text" name="item[name]" placeholder="New Item"/>
