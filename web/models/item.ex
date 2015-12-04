@@ -27,4 +27,19 @@ defmodule WhiteElephant.Item do
       join: g in assoc(i, :game),
       where: g.id == ^game.id
   end
+
+  def find_by_game_and_id(%{id: game_id}, id) do
+    find_by_game_and_id(game_id, id)
+  end
+  def find_by_game_and_id(game_id, id) do
+    (from(i in __MODULE__))
+      |> Ecto.Query.where([i], i.id == ^id)
+      |> Ecto.Query.where([i], i.game_id == ^game_id)
+      |> WhiteElephant.Repo.one!
+  end
+
+  def increment(model, steal_increment \\ 1) do
+    model
+      |> change(%{steals: model.steals + steal_increment})
+  end
 end
