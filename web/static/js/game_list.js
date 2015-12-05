@@ -1,7 +1,10 @@
+let classNames = require('classnames');
+
 class GameList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {items: props.initialItems}
+    this.maxSteals = props.maxSteals
     this.gameId = props.gameId
     this.socket = props.socket
 
@@ -54,7 +57,7 @@ class GameList extends React.Component {
           </thead>
           <tbody>
             {this.state.items.map((item, i) =>
-              <GameLine channel={this.channel} id={item.id} name={item.name} steals={item.steals} />
+              <GameLine channel={this.channel} itemId={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals} />
             )}
           </tbody>
         </table>
@@ -67,6 +70,7 @@ class GameList extends React.Component {
 class GameLine extends React.Component {
   constructor(props) {
     super(props)
+    this.maxSteals = props.maxSteals
     this.state = {name: props.name, steals: props.steals}
 
     // listen for updates to this item
@@ -78,29 +82,95 @@ class GameLine extends React.Component {
   }
 
   delete(evt) {
-    this.channel.push('remove_item', {id: this.props.id})
+    this.channel.push('remove_item', {id: this.props.itemId})
     evt.preventDefault()
   }
 
   increment(evt){
-    this.channel.push('steal_item', {id: this.props.id})
+    this.channel.push('steal_item', {id: this.props.itemId})
     evt.preventDefault()
   }
 
   decrement(evt){
-    this.channel.push('undo_steal_item', {id: this.props.id})
+    this.channel.push('undo_steal_item', {id: this.props.itemId})
     evt.preventDefault()
   }
 
   render() {
     return (
       <tr>
-        <td>{this.state.name} ({this.props.id})</td>
+        <td>{this.state.name} ({this.props.itemId})</td>
         <td>
-          <a className="btn btn-default" onClick={this.decrement.bind(this)}>-</a> {this.state.steals} <a className="btn btn-default" onClick={this.increment.bind(this)}>+</a>
+          <GameLineDecrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId} />
+          &nbsp;
+          {this.state.steals}
+          &nbsp;
+          <GameLineIncrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId} />
         </td>
         <td className="text-right"><a className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</a></td>
       </tr>
+    )
+  }
+}
+
+class GameLineIncrementer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.maxSteals = parseInt(props.maxSteals)
+    this.channel = props.channel
+    this.state = this.propsToState(props)
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('will receive')
+    this.setState(this.propsToState(props))
+  }
+
+  handleClick(evt) {
+    this.channel.push('steal_item', {id: this.props.itemId})
+  }
+
+  propsToState(props) {
+    return {
+      steals: props.steals,
+      shouldRender: parseInt(props.steals) < this.maxSteals
+    }
+  }
+
+  render() {
+    return (
+      <a className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick.bind(this)}>+</a>
+    )
+  }
+}
+
+class GameLineDecrementer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.maxSteals = parseInt(props.maxSteals)
+    this.channel = props.channel
+    this.state = this.propsToState(props)
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('will receive')
+    this.setState(this.propsToState(props))
+  }
+
+  handleClick(evt) {
+    this.channel.push('undo_steal_item', {id: this.props.itemId})
+  }
+
+  propsToState(props) {
+    return {
+      steals: props.steals,
+      shouldRender: parseInt(props.steals) > 0
+    }
+  }
+
+  render() {
+    return (
+      <a className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick.bind(this)}>-</a>
     )
   }
 }

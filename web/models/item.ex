@@ -28,18 +28,23 @@ defmodule WhiteElephant.Item do
       where: g.id == ^game.id
   end
 
-  def find_by_game_and_id(%{id: game_id}, id) do
-    find_by_game_and_id(game_id, id)
-  end
-  def find_by_game_and_id(game_id, id) do
-    (from(i in __MODULE__))
-      |> Ecto.Query.where([i], i.id == ^id)
-      |> Ecto.Query.where([i], i.game_id == ^game_id)
-      |> WhiteElephant.Repo.one!
-  end
+  @doc """
+  Creates a changeset that will increment the current number of steals
 
+  Note: this requires that the game association be already loaded so we can validate that we're not stealing too many times
+  """
   def increment(model, steal_increment \\ 1) do
     model
       |> change(%{steals: model.steals + steal_increment})
+      |> validate_number(:steals, greater_than_or_equal_to: 0, less_than_or_equal_to: model.game.max_steals)
+  end
+
+  @doc """
+  Creates a changeset that will decrement the current number of steals by the steal_increment
+
+  Note: this requires that the game association be already loaded so we can validate that we're not stealing too many times
+  """
+  def decrement(model, steal_increment \\ 1) do
+    increment(model, -1 * steal_increment)
   end
 end

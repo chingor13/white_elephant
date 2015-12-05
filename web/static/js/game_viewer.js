@@ -61,7 +61,6 @@ class GameViewerLine extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('will receive')
     this.setState(this.propsToState(props))
   }
 
