@@ -24,7 +24,9 @@ defmodule WhiteElephant.GameChannel do
   end
 
   def handle_in("remove_item", %{"id" => item_id}, socket) do
-    item = WhiteElephant.Item.find_by_game_and_id(socket.assigns.game, item_id)
+    item = socket.assigns.game
+      |> Ecto.Model.assoc(:items)
+      |> Repo.get(item_id)
 
     case Repo.delete(item) do
       {:ok, item} ->
@@ -36,10 +38,12 @@ defmodule WhiteElephant.GameChannel do
   end
 
   def handle_in("steal_item", %{"id" => item_id}, socket) do
-    IO.puts("stealing #{item_id}")
-    item = WhiteElephant.Item.find_by_game_and_id(socket.assigns.game, item_id)
+    item = socket.assigns.game
+      |> Ecto.Model.assoc(:items)
+      |> Repo.get(item_id)
+      |> Map.put(:game, socket.assigns.game)
 
-    changeset = WhiteElephant.Item.increment(item, 1)
+    changeset = WhiteElephant.Item.increment(item)
     case Repo.update(changeset) do
       {:ok, item} ->
         broadcast! socket, "item_updated", WhiteElephant.ItemView.render("item.json", %{item: item})
@@ -50,9 +54,12 @@ defmodule WhiteElephant.GameChannel do
   end
 
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
-    item = WhiteElephant.Item.find_by_game_and_id(socket.assigns.game, item_id)
+    item = socket.assigns.game
+      |> Ecto.Model.assoc(:items)
+      |> Repo.get(item_id)
+      |> Map.put(:game, socket.assigns.game)
 
-    changeset = WhiteElephant.Item.increment(item, -1)
+    changeset = WhiteElephant.Item.decrement(item)
     case Repo.update(changeset) do
       {:ok, item} ->
         broadcast! socket, "item_updated", WhiteElephant.ItemView.render("item.json", %{item: item})

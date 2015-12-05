@@ -3,4 +3,4 @@
 <script type="text/javascript">
 window.items = <%= raw render("items.json", game: @game) %>;
 </script>
-<div id="game_viewer" data-game-id="<%= @game.id %>"></div>
+<div id="game_viewer" data-game-id="<%= @game.id %>" data-max-steals="<%= @game.max_steals %>"></div>

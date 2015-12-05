@@ -31,6 +31,7 @@ if(game) {
     <GameList
       socket={socket}
       gameId={game.getAttribute('data-game-id')}
+      maxSteals={game.getAttribute('data-max-steals')}
       initialItems={window.items} />,
     game
   )
@@ -43,6 +44,7 @@ if(gameViewer) {
     <GameViewer
       socket={socket}
       gameId={gameViewer.getAttribute('data-game-id')}
+      maxSteals={gameViewer.getAttribute('data-max-steals')}
       initialItems={window.items} />,
     gameViewer
   )
