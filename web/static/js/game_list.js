@@ -121,6 +121,11 @@ class GameLineIncrementer extends React.Component {
     this.state = this.propsToState(props)
   }
 
+  componentWillReceiveProps(props) {
+    console.log('will receive')
+    this.setState(this.propsToState(props))
+  }
+
   handleClick(evt) {
     this.channel.push('steal_item', {id: this.props.itemId})
   }
@@ -145,6 +150,11 @@ class GameLineDecrementer extends React.Component {
     this.maxSteals = parseInt(props.maxSteals)
     this.channel = props.channel
     this.state = this.propsToState(props)
+  }
+
+  componentWillReceiveProps(props) {
+    console.log('will receive')
+    this.setState(this.propsToState(props))
   }
 
   handleClick(evt) {
