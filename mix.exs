@@ -19,7 +19,7 @@ defmodule WhiteElephant.Mixfile do
   def application do
     [mod: {WhiteElephant, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :tzdata]]
+                    :phoenix_ecto, :postgrex, :timex, :tzdata]]
   end
 
   # Specifies which paths to compile per environment.
