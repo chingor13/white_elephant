@@ -37,7 +37,7 @@ defmodule WhiteElephant.ItemController do
     changeset = Item.changeset(item, item_params)
 
     case Repo.update(changeset) do
-      {:ok, item} ->
+      {:ok, _item} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
         |> redirect(to: game_path(conn, :show, conn.assigns[:game]))
