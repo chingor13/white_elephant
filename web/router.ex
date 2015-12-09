@@ -32,6 +32,13 @@ defmodule WhiteElephant.Router do
     end
   end
 
+  scope "/auth", WhiteElephant do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", WhiteElephant do
   #   pipe_through :api
