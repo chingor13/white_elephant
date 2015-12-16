@@ -13,17 +13,11 @@ class GameList extends React.Component {
     this.channel.join()
       .receive("ok", resp => { 
         // listen to channel events and modify the view
-        this.channel.on("item_created", this.addItem.bind(this))
+        this.channel.on("item_created", this.addOrUpdateItem.bind(this))
         this.channel.on("item_deleted", this.removeItem.bind(this))
-        this.channel.on("item_updated", this.updateItem.bind(this))
+        this.channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
       .receive("error", resp => { console.log("Unable to join", resp) })
-  }
-
-  addItem(item) {
-    let items = this.state.items
-    items.push(item)
-    this.setState({items: items})
   }
 
   removeItem(itemToRemove) {
@@ -33,7 +27,8 @@ class GameList extends React.Component {
     this.setState({items: items})
   }
 
-  updateItem(itemToUpdate) {
+  addOrUpdateItem(itemToUpdate) {
+    let updated = false
     let items = this.state.items.map((item, i) =>  {
       if(item.id == itemToUpdate.id) {
         return itemToUpdate
@@ -41,6 +36,10 @@ class GameList extends React.Component {
         return item
       }
     });
+
+    if(!updated) {
+      items.push(itemToUpdate)
+    }
     this.setState({items: items})
   }
 
