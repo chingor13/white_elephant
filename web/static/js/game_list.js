@@ -31,6 +31,7 @@ class GameList extends React.Component {
     let updated = false
     let items = this.state.items.map((item, i) =>  {
       if(item.id == itemToUpdate.id) {
+        updated = true
         return itemToUpdate
       } else {
         return item
