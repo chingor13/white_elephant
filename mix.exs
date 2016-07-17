@@ -18,7 +18,7 @@ defmodule WhiteElephant.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {WhiteElephant, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
                     :phoenix_ecto, :postgrex, :timex, :tzdata,
                     :edeliver]]
   end
