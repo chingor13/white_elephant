@@ -19,7 +19,8 @@ defmodule WhiteElephant.Mixfile do
   def application do
     [mod: {WhiteElephant, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :timex, :tzdata]]
+                    :phoenix_ecto, :postgrex, :timex, :tzdata,
+                    :edeliver]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,7 +38,8 @@ defmodule WhiteElephant.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"},
      {:exrm, "~> 1.0"},
-     {:timex, "~> 3.0"}]
+     {:timex, "~> 3.0"},
+     {:edeliver, "~> 1.2.9"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.
