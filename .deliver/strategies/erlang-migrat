@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+source "$(dirname $(dirname $(dirname ${BASH_SOURCE[0]})))/deps/edeliver/libexec/erlang"
+
+[[ $ARGS =~ "production" ]] && export DEPLOY_ENVIRONMENT="production" || export DEPLOY_ENVIRONMENT="staging"
+set_deploy_hosts
+
+run() {
+  authorize_hosts
+  status "Migrating ${DEPLOY_ENVIRONMENT} database"
+  [[ "$DEPLOY_ENVIRONMENT" = "production" ]] && __config_confirm
+  __remote "
+    [ -f ~/.profile ] && source ~/.profile
+    set -e
+    cd ${DELIVER_TO}/${APP} $SILENCE
+    bin/${APP} rpc Elixir.WhiteElephant.Repo migrate
+  "
+}
+
+
+__config_confirm() {
+  while true; do
+    echo -n -e "\r${2}Are you sure? (y|n): ${txtrst}"
+    read -n 1 option
+    [ "$option" = "y" ] && echo && break
+    [ "$option" = "n" ] && echo && exit 1
+  done
+}
