@@ -37,7 +37,7 @@ defmodule WhiteElephant.Game do
   """
   defp set_default_code(changeset) do
     case fetch_field(changeset, :code) do
-      {:model, nil} ->
+      {:data, nil} ->
         put_change(changeset, :code, random_string(6))
       _ ->
         changeset
