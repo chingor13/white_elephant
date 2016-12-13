@@ -1,4 +1,5 @@
-let classNames = require('classnames');
+import classNames from 'classnames'
+import React from 'react'
 
 class GameList extends React.Component {
   constructor(props) {
@@ -9,39 +10,39 @@ class GameList extends React.Component {
     this.socket = props.socket
 
     // connect to the channel for this game
-    this.channel = this.socket.channel("games:" + this.gameId, {})
+    this.channel = this.socket.channel(`games:${this.gameId}`, {})
     this.channel.join()
-      .receive("ok", resp => { 
+      .receive("ok", (resp) => {
         // listen to channel events and modify the view
         this.channel.on("item_created", this.addOrUpdateItem.bind(this))
         this.channel.on("item_deleted", this.removeItem.bind(this))
         this.channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
-      .receive("error", resp => { console.log("Unable to join", resp) })
+      .receive("error", (resp) => { console.log("Unable to join", resp) })
   }
 
   removeItem(itemToRemove) {
-    let items = this.state.items.filter((item, i) =>
+    const items = this.state.items.filter((item, i) =>
       itemToRemove.id !== item.id
-    );
-    this.setState({items: items})
+    )
+    this.setState({items})
   }
 
   addOrUpdateItem(itemToUpdate) {
     let updated = false
-    let items = this.state.items.map((item, i) =>  {
-      if(item.id == itemToUpdate.id) {
+    const items = this.state.items.map((item, i) =>  {
+      if (item.id === itemToUpdate.id) {
         updated = true
         return itemToUpdate
       } else {
         return item
       }
-    });
+    })
 
-    if(!updated) {
+    if (!updated) {
       items.push(itemToUpdate)
     }
-    this.setState({items: items})
+    this.setState({items})
   }
 
   render() {
@@ -52,18 +53,18 @@ class GameList extends React.Component {
             <tr>
               <th>Item</th>
               <th>Steals</th>
-              <th></th>
+              <th/>
             </tr>
           </thead>
           <tbody>
             {this.state.items.map((item, i) =>
-              <GameLine channel={this.channel} itemId={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals} />
+              <GameLine channel={this.channel} itemId={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
             )}
           </tbody>
         </table>
-        <ItemForm channel={this.channel} />
+        <ItemForm channel={this.channel}/>
       </div>
-    );
+    )
   }
 }
 
@@ -81,17 +82,17 @@ class GameLine extends React.Component {
     this.setState({name: props.name, steals: props.steals})
   }
 
-  delete(evt) {
+  delete = (evt) => {
     this.channel.push('remove_item', {id: this.props.itemId})
     evt.preventDefault()
   }
 
-  increment(evt){
+  increment = (evt) => {
     this.channel.push('steal_item', {id: this.props.itemId})
     evt.preventDefault()
   }
 
-  decrement(evt){
+  decrement = (evt) => {
     this.channel.push('undo_steal_item', {id: this.props.itemId})
     evt.preventDefault()
   }
@@ -101,13 +102,15 @@ class GameLine extends React.Component {
       <tr>
         <td>{this.state.name} ({this.props.itemId})</td>
         <td>
-          <GameLineDecrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId} />
+          <GameLineDecrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId}/>
           &nbsp;
           {this.state.steals}
           &nbsp;
-          <GameLineIncrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId} />
+          <GameLineIncrementer channel={this.channel} steals={this.state.steals} maxSteals={this.maxSteals} itemId={this.props.itemId}/>
         </td>
-        <td className="text-right"><a className="btn btn-danger" onClick={this.delete.bind(this)}>Delete</a></td>
+        <td className="text-right">
+          <button className="btn btn-danger" onClick={this.delete}>Delete Item</button>
+        </td>
       </tr>
     )
   }
@@ -116,7 +119,7 @@ class GameLine extends React.Component {
 class GameLineIncrementer extends React.Component {
   constructor(props) {
     super(props)
-    this.maxSteals = parseInt(props.maxSteals)
+    this.maxSteals = parseInt(props.maxSteals, 10)
     this.channel = props.channel
     this.state = this.propsToState(props)
   }
@@ -126,20 +129,18 @@ class GameLineIncrementer extends React.Component {
     this.setState(this.propsToState(props))
   }
 
-  handleClick(evt) {
+  handleClick = (evt) => {
     this.channel.push('steal_item', {id: this.props.itemId})
   }
 
-  propsToState(props) {
-    return {
-      steals: props.steals,
-      shouldRender: parseInt(props.steals) < this.maxSteals
-    }
-  }
+  propsToState = props => ({
+    steals: props.steals,
+    shouldRender: parseInt(props.steals, 10) < this.maxSteals
+  })
 
   render() {
     return (
-      <a className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick.bind(this)}>+</a>
+      <button className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick}>+</button>
     )
   }
 }
@@ -147,7 +148,7 @@ class GameLineIncrementer extends React.Component {
 class GameLineDecrementer extends React.Component {
   constructor(props) {
     super(props)
-    this.maxSteals = parseInt(props.maxSteals)
+    this.maxSteals = parseInt(props.maxSteals, 10)
     this.channel = props.channel
     this.state = this.propsToState(props)
   }
@@ -157,20 +158,18 @@ class GameLineDecrementer extends React.Component {
     this.setState(this.propsToState(props))
   }
 
-  handleClick(evt) {
+  handleClick = (evt) => {
     this.channel.push('undo_steal_item', {id: this.props.itemId})
   }
 
-  propsToState(props) {
-    return {
-      steals: props.steals,
-      shouldRender: parseInt(props.steals) > 0
-    }
-  }
+  propsToState = props => ({
+    steals: props.steals,
+    shouldRender: parseInt(props.steals, 10) > 0
+  })
 
   render() {
     return (
-      <a className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick.bind(this)}>-</a>
+      <button className={classNames("btn", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick}>-</button>
     )
   }
 }
@@ -182,21 +181,21 @@ class ItemForm extends React.Component {
     this.state = {name: ""}
   }
 
-  handleSubmit(evt) {
+  handleSubmit = (evt) => {
     this.channel.push('create_item', this.state)
     this.setState({name: ""})
     evt.preventDefault()
   }
 
-  handleChange(event) {
-    this.setState({name: event.target.value});
+  handleChange = (evt) => {
+    this.setState({name: evt.target.value})
   }
 
   render() {
     return (
-      <form className="form-inline" onSubmit={this.handleSubmit.bind(this)}>
+      <form className="form-inline" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input className="form-control" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="New Item"/>
+          <input className="form-control" value={this.state.name} onChange={this.handleChange} placeholder="New Item"/>
         </div>
         <input type="submit" value="Add Item" className="btn btn-sm btn-success"/>
       </form>

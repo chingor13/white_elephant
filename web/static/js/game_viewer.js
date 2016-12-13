@@ -1,4 +1,5 @@
-let classNames = require('classnames');
+import React from 'react'
+import classNames from 'classnames'
 
 class GameViewer extends React.Component {
   constructor(props) {
@@ -8,45 +9,45 @@ class GameViewer extends React.Component {
     this.socket = props.socket
     this.maxSteals = props.maxSteals
 
-    this.channel = this.socket.channel("games:" + this.gameId, {})
+    this.channel = this.socket.channel(`games:${this.gameId}`, {})
     this.channel.join()
-      .receive("ok", resp => {
+      .receive("ok", (resp) => {
         this.channel.on("item_created", this.addOrUpdateItem.bind(this))
         this.channel.on("item_deleted", this.removeItem.bind(this))
         this.channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
-      .receive("error", resp => { console.log("Unable to join", resp) })
+      .receive("error", (resp) => { console.log("Unable to join", resp) })
   }
 
   removeItem(itemToRemove) {
-    let items = this.state.items.filter((item, i) =>
+    const items = this.state.items.filter((item, i) =>
       itemToRemove.id !== item.id
-    );
-    this.setState({items: items})
+    )
+    this.setState({items})
   }
 
   addOrUpdateItem(itemToUpdate) {
     let updated = false
-    let items = this.state.items.map((item, i) =>  {
-      if(item.id == itemToUpdate.id) {
+    const items = this.state.items.map((item, i) =>  {
+      if (item.id === itemToUpdate.id) {
         updated = true
         return itemToUpdate
       } else {
         return item
       }
-    });
+    })
 
-    if(!updated) {
+    if (!updated) {
       items.push(itemToUpdate)
     }
-    this.setState({items: items})
+    this.setState({items})
   }
 
   render() {
     return (
       <div className="row">
         {this.state.items.map((item, i) =>
-          <GameViewerLine id={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals} />
+          <GameViewerLine id={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
         )}
       </div>
     )
@@ -56,7 +57,7 @@ class GameViewer extends React.Component {
 class GameViewerLine extends React.Component {
   constructor(props) {
     super(props)
-    this.maxSteals = parseInt(props.maxSteals)
+    this.maxSteals = parseInt(props.maxSteals, 10)
     this.state = this.propsToState(props)
   }
 
@@ -65,14 +66,14 @@ class GameViewerLine extends React.Component {
   }
 
   propsToState(props) {
-    let state = {
+    const state = {
       name: props.name,
       statusClass: 'panel-success',
-      stealsLeft: this.maxSteals - parseInt(props.steals)
+      stealsLeft: this.maxSteals - parseInt(props.steals, 10)
     }
-    if(state.stealsLeft <= 0) {
+    if (state.stealsLeft <= 0) {
       state.statusClass = 'panel-danger'
-    } else if(state.stealsLeft < 2) {
+    } else if (state.stealsLeft < 2) {
       state.statusClass = 'panel-warning'
     }
     return state
