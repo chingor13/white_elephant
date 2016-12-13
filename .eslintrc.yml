@@ -1,0 +1,55 @@
+rules:
+  # object keys must have at least one space after the colon
+  key-spacing:
+    - 2
+    - mode: 'minimum'
+
+  # never use semi-colons
+  semi:
+    - 2
+    - never
+
+  max-len:
+    - 0
+
+  no-console:
+    - 0
+
+  no-else-return:
+    - 0
+
+  # though we don’t enforce, only use multi spaces for alignment
+  no-multi-spaces:
+    - 0
+
+  # remove all unused variables
+  no-unused-vars:
+    - 2
+    - args: none
+    # - argsIgnorePattern: '^_' # ignore vars with a _ prefix (e.g. _foo)
+
+  quotes:
+    - 0
+
+  comma-dangle:
+    - 0
+
+  object-curly-spacing:
+    - 0
+
+  react/jsx-filename-extension:
+    - 0
+
+  react/jsx-space-before-closing:
+    - 2
+    - never
+
+  react/prop-types:
+    - 0
+
+  react/no-multi-comp:
+    - 0
+
+extends: 'airbnb'
+
+parser: 'babel-eslint'
