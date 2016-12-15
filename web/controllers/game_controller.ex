@@ -11,18 +11,6 @@ defmodule WhiteElephant.GameController do
     render(conn, "index.html", games: games)
   end
 
-  def search(conn, %{"search" => %{"key" => key}}) do
-    case Repo.one(from g in Game, where: g.code == ^key, select: g.id) do
-      nil ->
-        conn
-        |> put_flash(:error, "Could not find game '#{key}'")
-        |> redirect(to: game_path(conn, :index))
-      _game_id ->
-        conn
-        |> redirect(to: play_path(conn, :play, key))
-    end
-  end
-
   def new(conn, _params) do
     timestamp = conn |> now
     changeset = Game.changeset(%Game{}, %{date: timestamp})

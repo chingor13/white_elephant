@@ -27,6 +27,8 @@ import GameList from './game_list'
 
 import GameViewer from './game_viewer'
 
+import SearchForm from './search_form'
+
 // admin controls
 const game = document.getElementById("game_container")
 if (game) {
@@ -52,5 +54,13 @@ if (gameViewer) {
       initialItems={window.items}
     />,
     gameViewer
+  )
+}
+
+// search form
+const searchForm = document.getElementById("search_form")
+if (searchForm) {
+  ReactDOM.render(
+    <SearchForm />, searchForm
   )
 }

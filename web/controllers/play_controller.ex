@@ -4,8 +4,16 @@ defmodule WhiteElephant.PlayController do
   alias WhiteElephant.Game
 
   def play(conn, %{"game_code" => game_code}) do
-    game = Repo.one!(Game |> Game.by_code(game_code))
-      |> Repo.preload(:items)
-    render conn, "play.html", game: game
+    with query <- Game.by_code(Game, game_code),
+         game = %Game{} <- Repo.one(query),
+         game = Repo.preload(game, :items)
+    do
+      render conn, "play.html", game: game
+    else
+      _ ->
+        conn
+        |> put_flash(:error, "Could not find game '#{game_code}'")
+        |> redirect(to: game_path(conn, :index))
+    end
   end
 end
