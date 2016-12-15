@@ -21,6 +21,7 @@ defmodule WhiteElephant.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/play/:game_code", PlayController, :play
+    post "/games/search", GameController, :search
 
     get "/", PageController, :index
   end

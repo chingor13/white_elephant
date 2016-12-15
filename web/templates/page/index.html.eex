@@ -9,6 +9,9 @@
   </div>
   <div class="visible-xs-block"><br></div>
   <div class="col-sm-6">
-    <a href="#" class="btn btn-lg btn-info">Find a Game</a>
+    <%= form_for @conn, game_path(@conn, :search), [as: :search], fn f -> %>
+      <%= text_input f, :key %>
+      <%= submit "Find a Game", class: "btn btn-lg btn-info" %>
+    <% end %>
   </div>
 </div>
