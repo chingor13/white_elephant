@@ -47,7 +47,13 @@ class GameViewer extends React.Component {
     return (
       <div className="row">
         {this.state.items.map((item, i) =>
-          <GameViewerLine id={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
+          <GameViewerLine
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            steals={item.steals}
+            maxSteals={this.maxSteals}
+          />
         )}
       </div>
     )
