@@ -1,5 +1,5 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
+  <%= if @changeset.action && false do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below:</p>
       <ul>
@@ -19,7 +19,7 @@
     <label for="game_max_steals">Max Steals</label>
     <%= text_input f, :max_steals, class: "form-control"  %>
   </div>
-  
+
   <div class="form-group">
     <label for="game_date">Date</label>
     <%= text_input f, :date, class: "form-control"  %>
