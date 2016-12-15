@@ -1,6 +1,8 @@
-<h1><%= @game.name %> <small>(<%= @game.date %>)</small></h1>
+<div class="container">
+  <h1><%= @game.name %></h1>
+  <div id="game_viewer" data-game-id="<%= @game.id %>" data-max-steals="<%= @game.max_steals %>"></div>
+</div>
 
 <script type="text/javascript">
 window.items = <%= raw render("items.json", game: @game) %>;
 </script>
-<div id="game_viewer" data-game-id="<%= @game.id %>" data-max-steals="<%= @game.max_steals %>"></div>
