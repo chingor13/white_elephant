@@ -3,4 +3,5 @@ _build
 config
 deps
 lib
+node_modules
 priv
