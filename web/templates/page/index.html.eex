@@ -9,6 +9,16 @@
   </div>
   <div class="visible-xs-block"><br></div>
   <div class="col-sm-6">
-    <a href="#" class="btn btn-lg btn-info">Find a Game</a>
+    <div class="row">
+      <div class="col-sm-4">
+        <%= form_for @conn, game_path(@conn, :search), [as: :search], fn f -> %>
+          <div class="form-group form-group-lg">
+            <label class="sr-only" for="search_key">Game code</label>
+            <%= text_input f, :code, class: "form-control", placeholder: "Game code" %>
+          </div>
+          <%= submit "Find a Game", class: "btn btn-lg btn-info" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
