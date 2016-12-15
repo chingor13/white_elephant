@@ -17,7 +17,7 @@ defmodule WhiteElephant.GameController do
         conn
         |> put_flash(:error, "Could not find game '#{key}'")
         |> redirect(to: game_path(conn, :index))
-      game_id ->
+      _game_id ->
         conn
         |> redirect(to: play_path(conn, :play, key))
     end

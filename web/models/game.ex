@@ -38,13 +38,10 @@ defmodule WhiteElephant.Game do
   defp set_default_code(changeset) do
     case fetch_field(changeset, :code) do
       {:data, nil} ->
-        put_change(changeset, :code, random_string(6))
+        put_change(changeset, :code, StringGenerator.string_of_length(6))
       _ ->
         changeset
     end
   end
 
-  defp random_string(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
-  end
 end
