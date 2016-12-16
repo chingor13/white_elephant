@@ -2,7 +2,7 @@
   $heading-font-family: 'Henny Penny', cursive;
   $font-family: 'Patrick Hand SC', cursive;
 
-  $space: 10px;
+  $space: 6px;
 
   $yellow:         #F3C600;
   $amber:          #F59D00;
@@ -64,7 +64,7 @@
   }
 
   h1 {
-    font-size: 3em;
+    font-size: 2.5em;
     margin-top: 0;
   }
 
@@ -198,6 +198,7 @@
 
     color: inherit;
     font-family: $font-family;
+    font-size: 18px;
     font-weight: bold;
     letter-spacing: .03em;
 
@@ -223,7 +224,7 @@
     z-index: 3;
 
     font-family: $heading-font-family;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: bold;
 
   }
@@ -234,7 +235,7 @@
 
   .gift-locked {
     position: absolute;
-    top: calc(52% - 55px);
+    top: calc(52% - 30px);
     z-index: 4;
     font-size: 10px;
     font-weight: bold;
