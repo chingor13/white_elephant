@@ -1,4 +1,5 @@
 import React from 'react'
+import Snow from './snow'
 
 class GameViewer extends React.Component {
   constructor(props) {
@@ -13,6 +14,8 @@ class GameViewer extends React.Component {
         channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
       .receive("error", (resp) => { console.log("Unable to join", resp) })
+
+    Snow.init()
   }
 
   removeItem(itemToRemove) {

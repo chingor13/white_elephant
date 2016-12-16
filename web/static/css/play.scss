@@ -47,6 +47,10 @@
   );
 
 
+  canvas {
+    position: absolute;
+  }
+
   body {
     background-image: linear-gradient(
       hsl(208, 57%, 20%),
