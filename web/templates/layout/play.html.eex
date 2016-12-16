@@ -10,7 +10,7 @@
     <title>White Elephant!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji|Griffy|Henny+Penny|Life+Savers|Mountains+of+Christmas|Peralta" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Henny+Penny|Patrick+Hand+SC" rel="stylesheet">
   </head>
 
   <body>
@@ -19,7 +19,7 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     </div> <!-- /container -->
 
-      <%= render @view_module, @view_template, assigns %>
+    <%= render @view_module, @view_template, assigns %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.min.js"></script>
