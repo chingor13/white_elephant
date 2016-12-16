@@ -3,6 +3,8 @@ defmodule WhiteElephant.PlayController do
 
   alias WhiteElephant.Game
 
+  plug :put_layout, "play.html"
+
   def play(conn, %{"game_code" => game_code}) do
     with query <- Game.by_code(Game, game_code),
          game = %Game{} <- Repo.one(query),

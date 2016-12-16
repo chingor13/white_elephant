@@ -1,0 +1,64 @@
+.play {
+  $heading-font-family: 'Henny Penny', cursive;
+
+  // $font-family: 'Mountains of Christmas', cursive;
+  $font-family: 'Baloo Paaji', cursive;
+  // $font-family: 'Life Savers', cursive;
+  // $font-family: 'Henny Penny', cursive;
+  // $font-family: 'Peralta', cursive;
+
+  $space: 10px;
+
+  color: white;
+
+
+  body {
+    background-image: linear-gradient(
+      hsl(208, 57%, 20%),
+      hsl(208, 57%, 40%),
+      hsl(208, 57%, 70%)
+    );
+    font-family: $font-family;
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  h1,h2,h3,h4 {
+    color: white;
+    font-family: $heading-font-family;
+  }
+
+  .gifts {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+
+  .gift {
+    border: 1px solid rgba(255,255,255,.3);
+    min-height: 200px;
+    max-width: 150px;
+    background-color: green;
+    padding: $space;
+    margin: $space * 2;
+
+    &:nth-child(2n+1) {
+      // background-color: red;
+    }
+  }
+
+  .gift-name {
+    margin-top: 0;
+    font-family: $font-family;
+  }
+
+  .gift-steals {
+    display: inline-block;
+    border-radius: 100%;
+    background-color: white;
+    // height: 2em;
+    // width:  2em;
+    padding: .2em .65em;
+  }
+}
+

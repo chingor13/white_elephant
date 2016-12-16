@@ -45,9 +45,15 @@ class GameViewer extends React.Component {
 
   render() {
     return (
-      <div className="row">
+      <div className="gifts">
         {this.state.items.map((item, i) =>
-          <GameViewerLine id={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
+          <GameViewerLine
+            key={item.id}
+            id={item.id}
+            name={item.name}
+            steals={item.steals}
+            maxSteals={this.maxSteals}
+          />
         )}
       </div>
     )
@@ -81,15 +87,9 @@ class GameViewerLine extends React.Component {
 
   render() {
     return (
-      <div className="col-sm-4">
-        <div className={classNames('panel', this.state.statusClass)}>
-          <div className="panel-heading">
-            <div className="panel-title">
-              {this.state.name}
-              <span className="pull-right">{this.state.stealsLeft}</span>
-            </div>
-          </div>
-        </div>
+      <div className="gift" data-steals={this.state.stealsLeft} style={{transform: `rotate(${Math.random() * 3}deg)`}}>
+        <h3 className="gift-name">{this.state.name}</h3>
+        <span className="gift-steals">{this.state.stealsLeft}</span>
       </div>
     )
   }
