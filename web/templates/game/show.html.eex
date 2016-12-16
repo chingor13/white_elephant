@@ -1,6 +1,14 @@
-<h2>Admin for <%= @game.name %> <small>(<%= @game.date %>)</small></h2>
 
 <script type="text/javascript">
 window.items = <%= raw render("items.json", game: @game) %>;
 </script>
-<div id="game_container" data-game-id="<%= @game.id %>" data-max-steals="<%= @game.max_steals %>"></div>
+<div class="row">
+  <div class="col-sm-8">
+    <h2>Admin for <%= @game.name %> <small>(<%= @game.date %>)</small></h2>
+
+    <div id="game_container" data-game-id="<%= @game.id %>" data-max-steals="<%= @game.max_steals %>"></div>
+  </div>
+  <div class="col-sm-4">
+    <div id="player_container" data-game-id="<%= @game.id %>"></div>
+  </div>
+</div>
