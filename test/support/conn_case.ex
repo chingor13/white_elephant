@@ -32,8 +32,10 @@ defmodule WhiteElephant.ConnCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(WhiteElephant.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(WhiteElephant.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(WhiteElephant.Repo, {:shared, self()})
     end
 
     :ok
