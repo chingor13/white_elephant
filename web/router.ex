@@ -29,6 +29,7 @@ defmodule WhiteElephant.Router do
     pipe_through [:browser, :admin]
     resources "/games", GameController do
       resources "/items", ItemController, except: [:index, :show]
+      resources "/players", PlayerController
     end
   end
 
