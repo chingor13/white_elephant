@@ -8,9 +8,9 @@ class GameViewer extends React.Component {
     const channel = props.socket.channel(`games:${props.gameId}`, {})
     channel.join()
       .receive("ok", (resp) => {
-        channel.on("item_created", this.addOrUpdateItem)
-        channel.on("item_deleted", this.removeItem)
-        channel.on("item_updated", this.addOrUpdateItem)
+        channel.on("item_created", this.addOrUpdateItem.bind(this))
+        channel.on("item_deleted", this.removeItem.bind(this))
+        channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
       .receive("error", (resp) => { console.log("Unable to join", resp) })
   }
