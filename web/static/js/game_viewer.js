@@ -1,20 +1,16 @@
 import React from 'react'
-import classNames from 'classnames'
 
 class GameViewer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {items: props.initialItems}
-    this.gameId = props.gameId
-    this.socket = props.socket
-    this.maxSteals = props.maxSteals
+    this.state = { items: props.initialItems }
 
-    this.channel = this.socket.channel(`games:${this.gameId}`, {})
-    this.channel.join()
+    const channel = props.socket.channel(`games:${props.gameId}`, {})
+    channel.join()
       .receive("ok", (resp) => {
-        this.channel.on("item_created", this.addOrUpdateItem.bind(this))
-        this.channel.on("item_deleted", this.removeItem.bind(this))
-        this.channel.on("item_updated", this.addOrUpdateItem.bind(this))
+        channel.on("item_created", this.addOrUpdateItem)
+        channel.on("item_deleted", this.removeItem)
+        channel.on("item_updated", this.addOrUpdateItem)
       })
       .receive("error", (resp) => { console.log("Unable to join", resp) })
   }
@@ -52,7 +48,7 @@ class GameViewer extends React.Component {
             id={item.id}
             name={item.name}
             steals={item.steals}
-            maxSteals={this.maxSteals}
+            maxSteals={this.props.maxSteals}
           />
         )}
       </div>
@@ -61,35 +57,15 @@ class GameViewer extends React.Component {
 }
 
 class GameViewerLine extends React.Component {
-  constructor(props) {
-    super(props)
-    this.maxSteals = parseInt(props.maxSteals, 10)
-    this.state = this.propsToState(props)
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState(this.propsToState(props))
-  }
-
-  propsToState(props) {
-    const state = {
-      name: props.name,
-      statusClass: 'panel-success',
-      stealsLeft: this.maxSteals - parseInt(props.steals, 10)
-    }
-    if (state.stealsLeft <= 0) {
-      state.statusClass = 'panel-danger'
-    } else if (state.stealsLeft < 2) {
-      state.statusClass = 'panel-warning'
-    }
-    return state
+  stealsLeft() {
+    return this.props.maxSteals - this.props.steals
   }
 
   render() {
     return (
-      <div className="gift" data-steals={this.state.stealsLeft} style={{transform: `rotate(${(Math.random() * 6) - 3}deg)`}}>
-        <h3 className="gift-name">{this.state.name}</h3>
-        <span className="gift-steals">{this.state.stealsLeft}</span>
+      <div className="gift" data-steals={this.stealsLeft()}>
+        <h3 className="gift-name">{this.props.name}</h3>
+        <span className="gift-steals">{this.stealsLeft()}</span>
       </div>
     )
   }
