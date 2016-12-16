@@ -87,7 +87,7 @@ class GameViewerLine extends React.Component {
 
   render() {
     return (
-      <div className="gift" data-steals={this.state.stealsLeft} style={{transform: `rotate(${Math.random() * 3}deg)`}}>
+      <div className="gift" data-steals={this.state.stealsLeft} style={{transform: `rotate(${(Math.random() * 6) - 3}deg)`}}>
         <h3 className="gift-name">{this.state.name}</h3>
         <span className="gift-steals">{this.state.stealsLeft}</span>
       </div>
