@@ -65,7 +65,9 @@ class GameViewerLine extends React.Component {
     return (
       <div className="gift" data-steals={this.stealsLeft()}>
         <h3 className="gift-name">{this.props.name}</h3>
-        <span className="gift-steals">{this.stealsLeft()}</span>
+        <span className="gift-steals">
+          {Array(this.props.steals + 1).join('X ')}
+        </span>
       </div>
     )
   }
