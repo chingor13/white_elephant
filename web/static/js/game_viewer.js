@@ -1,20 +1,16 @@
 import React from 'react'
-import classNames from 'classnames'
 
 class GameViewer extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {items: props.initialItems}
-    this.gameId = props.gameId
-    this.socket = props.socket
-    this.maxSteals = props.maxSteals
+    this.state = { items: props.initialItems }
 
-    this.channel = this.socket.channel(`games:${this.gameId}`, {})
-    this.channel.join()
+    const channel = props.socket.channel(`games:${props.gameId}`, {})
+    channel.join()
       .receive("ok", (resp) => {
-        this.channel.on("item_created", this.addOrUpdateItem.bind(this))
-        this.channel.on("item_deleted", this.removeItem.bind(this))
-        this.channel.on("item_updated", this.addOrUpdateItem.bind(this))
+        channel.on("item_created", this.addOrUpdateItem.bind(this))
+        channel.on("item_deleted", this.removeItem.bind(this))
+        channel.on("item_updated", this.addOrUpdateItem.bind(this))
       })
       .receive("error", (resp) => { console.log("Unable to join", resp) })
   }
@@ -52,7 +48,7 @@ class GameViewer extends React.Component {
             id={item.id}
             name={item.name}
             steals={item.steals}
-            maxSteals={this.maxSteals}
+            maxSteals={this.props.maxSteals}
           />
         )}
       </div>
@@ -61,35 +57,23 @@ class GameViewer extends React.Component {
 }
 
 class GameViewerLine extends React.Component {
-  constructor(props) {
-    super(props)
-    this.maxSteals = parseInt(props.maxSteals, 10)
-    this.state = this.propsToState(props)
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState(this.propsToState(props))
-  }
-
-  propsToState(props) {
-    const state = {
-      name: props.name,
-      statusClass: 'panel-success',
-      stealsLeft: this.maxSteals - parseInt(props.steals, 10)
-    }
-    if (state.stealsLeft <= 0) {
-      state.statusClass = 'panel-danger'
-    } else if (state.stealsLeft < 2) {
-      state.statusClass = 'panel-warning'
-    }
-    return state
+  stealsLeft() {
+    return this.props.maxSteals - this.props.steals
   }
 
   render() {
     return (
-      <div className="gift" data-steals={this.state.stealsLeft} style={{transform: `rotate(${(Math.random() * 6) - 3}deg)`}}>
-        <h3 className="gift-name">{this.state.name}</h3>
-        <span className="gift-steals">{this.state.stealsLeft}</span>
+      <div className="gift" data-steals={this.stealsLeft()}>
+        <h3 className="gift-name">{this.props.name}</h3>
+        <span className="gift-steals">
+          {Array(this.props.steals + 1).join('X ')}
+        </span>
+        {this.props.steals === 3 &&
+          <span className="gift-locked">
+            <svg version="1.1" width="100" height="100" viewBox="0 0 512 512"><path d="M86.4,480h339.2c12.3,0,22.4-9.9,22.4-22.1V246c0-12.2-10-22-22.4-22H404v-30.9c0-41.5-16.2-87.6-42.6-115.4 C335.1,49.9,297.4,32,256.1,32c-0.1,0-0.1,0-0.1,0c0,0-0.1,0-0.1,0c-41.3,0-79,17.9-105.3,45.6c-26.4,27.8-42.6,73.9-42.6,115.4V224 H89h-2.6C74,224,64,233.9,64,246v211.9C64,470.1,74,480,86.4,480z M161,193.1c0-27.3,9.9-61.1,28.1-80.3l0,0l0-0.3 C206.7,93.9,231,83,255.9,83h0.1h0.1c24.9,0,49.2,10.9,66.8,29.5l0,0.2l-0.1,0.1c18.3,19.2,28.1,53,28.1,80.3V224h-17.5h-155H161 V193.1z"/></svg>
+
+          </span>
+        }
       </div>
     )
   }
