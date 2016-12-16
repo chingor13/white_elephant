@@ -2,11 +2,11 @@ defmodule WhiteElephant.GameControllerTest do
   use WhiteElephant.ConnCase
 
   alias WhiteElephant.Game
-  @valid_attrs %{}
+  @valid_attrs [name: "Foobar", max_steals: "3", date: "2016-12-14"]
   @invalid_attrs %{}
 
   setup do
-    conn = conn()
+    conn = build_conn()
     {:ok, conn: conn}
   end
 
@@ -34,7 +34,7 @@ defmodule WhiteElephant.GameControllerTest do
   test "shows chosen resource", %{conn: conn} do
     game = Repo.insert! %Game{}
     conn = get conn, game_path(conn, :show, game)
-    assert html_response(conn, 200) =~ "Show game"
+    assert html_response(conn, 200) =~ "<div id=\"game_container\""
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
