@@ -3,7 +3,7 @@ defmodule WhiteElephant.GameTest do
 
   alias WhiteElephant.Game
 
-  @valid_attrs %{}
+  @valid_attrs %{"name" => "Foobar", "max_steals" => "3", "date" => "2016-12-14"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

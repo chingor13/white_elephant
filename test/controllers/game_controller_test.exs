@@ -6,7 +6,7 @@ defmodule WhiteElephant.GameControllerTest do
   @invalid_attrs %{}
 
   setup do
-    conn = conn()
+    conn = build_conn()
     {:ok, conn: conn}
   end
 

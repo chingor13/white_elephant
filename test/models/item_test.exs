@@ -3,7 +3,7 @@ defmodule WhiteElephant.ItemTest do
 
   alias WhiteElephant.Item
 
-  @valid_attrs %{}
+  @valid_attrs %{"name" => "bath mat"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
