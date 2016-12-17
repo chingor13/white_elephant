@@ -50,7 +50,7 @@ defmodule WhiteElephant.GameChannel do
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
-    end    
+    end
   end
 
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
@@ -66,7 +66,22 @@ defmodule WhiteElephant.GameChannel do
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
-    end  
+    end
+  end
+
+  def handle_in("create_player", parms, socket) do
+    game = socket.assigns.game
+    changeset = game
+      |> build(:players)
+      |> WhiteElephant.Player.changeset(params)
+
+    case Repo.insert(changeset) do
+      {:ok, player} ->
+        broadcast! socket, "player_created", WhiteElephant.Player.render("player.json", %{player: player})
+        {:reply, :ok, socket}
+      {:error, changeset} ->
+        {:reply, {:error, %{errors: changeset}}, socket}
+    end
   end
 
   # This is invoked every time a notification is being broadcast
