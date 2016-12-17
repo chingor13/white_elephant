@@ -15,11 +15,20 @@ class PlayerList extends React.Component {
     return (
       <div>
         <h2>Players</h2>
-        <ol>
-        {this.state.players.map((player, i) =>
-          <li key={"player_" + i}>{player}</li>
-        )}
-        </ol>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          {this.state.players.map((player, i) =>
+            <tr key={"player_" + i}>
+              <td>{player}</td>
+            </tr>
+          )}
+          </tbody>
+        </table>
         <PlayerForm addPlayer={this.addPlayer.bind(this)}/>
       </div>
     )
@@ -54,7 +63,7 @@ class PlayerForm extends React.Component {
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label className="sr-only" htmlFor="player_name">Name</label>
-          <input id="player_name" className="form-control" placeholder="Name" type="text" value={this.state.value} onChange={this.handleChange} />
+          <input id="player_name" className="form-control" placeholder="Name" type="text" value={this.state.value} onChange={this.handleChange} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"/>
         </div>
         <button className="btn btn-info" type="submit">Add Player</button>
       </form>

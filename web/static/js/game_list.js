@@ -195,7 +195,7 @@ class ItemForm extends React.Component {
     return (
       <form className="form-inline" onSubmit={this.handleSubmit}>
         <div className="form-group">
-          <input className="form-control" value={this.state.name} onChange={this.handleChange} placeholder="New Item"/>
+          <input className="form-control" value={this.state.name} onChange={this.handleChange} placeholder="New Item" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"/>
         </div>
         <input type="submit" value="Add Item" className="btn btn-sm btn-success"/>
       </form>
