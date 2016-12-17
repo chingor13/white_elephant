@@ -3,7 +3,7 @@ defmodule WhiteElephant.Mixfile do
 
   def project do
     [app: :white_elephant,
-     version: "0.0.6",
+     version: "0.1.0",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
