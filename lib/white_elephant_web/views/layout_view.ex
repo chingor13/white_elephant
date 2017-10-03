@@ -1,3 +1,3 @@
-defmodule WhiteElephant.LayoutView do
+defmodule WhiteElephantWeb.LayoutView do
   use WhiteElephantWeb, :view
 end

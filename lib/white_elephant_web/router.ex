@@ -1,4 +1,4 @@
-defmodule WhiteElephant.Router do
+defmodule WhiteElephantWeb.Router do
   use WhiteElephantWeb, :router
 
   pipeline :browser do
@@ -17,7 +17,7 @@ defmodule WhiteElephant.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", WhiteElephant do
+  scope "/", WhiteElephantWeb do
     pipe_through :browser # Use the default browser stack
 
     get "/play/:game_code", PlayController, :play
@@ -25,7 +25,7 @@ defmodule WhiteElephant.Router do
     get "/", PageController, :index
   end
 
-  scope "/admin", WhiteElephant do
+  scope "/admin", WhiteElephantWeb do
     pipe_through [:browser, :admin]
     resources "/games", GameController do
       resources "/items", ItemController, except: [:index, :show]

@@ -1,4 +1,4 @@
-defmodule WhiteElephant.PageController do
+defmodule WhiteElephantWeb.PageController do
   use WhiteElephantWeb, :controller
 
   def index(conn, _params) do

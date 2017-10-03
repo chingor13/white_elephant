@@ -1,4 +1,4 @@
-defmodule WhiteElephant.ItemController do
+defmodule WhiteElephantWeb.ItemController do
   use WhiteElephantWeb, :controller
 
   alias WhiteElephant.Item
@@ -70,6 +70,7 @@ defmodule WhiteElephant.ItemController do
   end
 
   defp find_item(conn) do
+    import Ecto.Query, only: [from: 2]
     game = get_game(conn)
     id = conn.params["id"]
     (from i in Item, where: i.id == ^id)

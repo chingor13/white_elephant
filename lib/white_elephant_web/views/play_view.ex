@@ -1,4 +1,4 @@
-defmodule WhiteElephant.PlayView do
+defmodule WhiteElephantWeb.PlayView do
   use WhiteElephantWeb, :view
 
   def render("items.json", %{game: game}) do

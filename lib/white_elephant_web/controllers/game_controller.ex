@@ -1,6 +1,5 @@
-defmodule WhiteElephant.GameController do
+defmodule WhiteElephantWeb.GameController do
   use WhiteElephantWeb, :controller
-  use Timex
 
   alias WhiteElephant.Game
 
@@ -12,8 +11,7 @@ defmodule WhiteElephant.GameController do
   end
 
   def new(conn, _params) do
-    timestamp = conn |> now
-    changeset = Game.changeset(%Game{}, %{date: timestamp})
+    changeset = Game.changeset(%Game{}, %{date: DateTime.utc_now()})
     render(conn, "new.html", changeset: changeset)
   end
 
@@ -66,10 +64,5 @@ defmodule WhiteElephant.GameController do
     conn
     |> put_flash(:info, "Game deleted successfully.")
     |> redirect(to: game_path(conn, :index))
-  end
-
-  def now(_conn) do
-    # This doesn't appear to take dst into account
-    Timex.now |> Timex.format("%Y-%m-%d", :strftime) |> elem(1)
   end
 end

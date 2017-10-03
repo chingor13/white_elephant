@@ -1,4 +1,4 @@
-defmodule WhiteElephant.ItemView do
+defmodule WhiteElephantWeb.ItemView do
   use WhiteElephantWeb, :view
 
   def render("index.json", %{items: items}) do

@@ -1,7 +1,7 @@
-defmodule WhiteElephant.Endpoint do
+defmodule WhiteElephantWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :white_elephant
 
-  socket "/socket", WhiteElephant.UserSocket
+  socket "/socket", WhiteElephantWeb.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -35,5 +35,5 @@ defmodule WhiteElephant.Endpoint do
     key: "_white_elephant_key",
     signing_salt: "zBYvx202"
 
-  plug WhiteElephant.Router
+  plug WhiteElephantWeb.Router
 end

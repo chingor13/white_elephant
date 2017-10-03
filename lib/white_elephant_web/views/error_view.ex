@@ -1,4 +1,4 @@
-defmodule WhiteElephant.ErrorView do
+defmodule WhiteElephantWeb.ErrorView do
   use WhiteElephantWeb, :view
 
   def render("404.html", _assigns) do
