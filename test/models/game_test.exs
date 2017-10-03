@@ -1,5 +1,5 @@
-defmodule WhiteElephant.GameTest do
-  use WhiteElephant.ModelCase
+defmodule WhiteElephantWeb.GameTest do
+  use WhiteElephant.DataCase
 
   alias WhiteElephant.Game
 

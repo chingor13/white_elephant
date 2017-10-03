@@ -1,3 +1,3 @@
-defmodule WhiteElephant.LayoutViewTest do
-  use WhiteElephant.ConnCase, async: true
+defmodule WhiteElephantWeb.LayoutViewTest do
+  use WhiteElephantWeb.ConnCase, async: true
 end

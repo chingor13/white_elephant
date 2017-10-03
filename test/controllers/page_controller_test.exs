@@ -1,5 +1,5 @@
-defmodule WhiteElephant.PageControllerTest do
-  use WhiteElephant.ConnCase
+defmodule WhiteElephantWeb.PageControllerTest do
+  use WhiteElephantWeb.ConnCase
 
   test "GET /" do
     conn = get build_conn(), "/"
