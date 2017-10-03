@@ -12,7 +12,7 @@ defmodule WhiteElephant.Game do
     timestamps()
   end
 
-  @required_fields ~w(name max_steals date)
+  @required_fields ~w(name max_steals date)a
   @optional_fields ~w()
 
   def by_code(query, code) do
@@ -28,7 +28,8 @@ defmodule WhiteElephant.Game do
   """
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
     |> set_default_code
     |> validate_length(:name, min: 1, max: 100)
     |> validate_number(:max_steals, greater_than_or_equal_to: 0)

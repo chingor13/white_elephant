@@ -21,7 +21,8 @@ defmodule WhiteElephant.Item do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, [:name, :steals])
+    |> validate_required(:name)
   end
 
   def for_game(query, game) do
