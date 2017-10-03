@@ -14,7 +14,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import '../../../deps/phoenix_html/web/static/js/phoenix_html'
+import 'phoenix_html'
 
 // Import local files
 //
