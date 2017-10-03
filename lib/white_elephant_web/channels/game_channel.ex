@@ -27,7 +27,7 @@ defmodule WhiteElephantWeb.GameChannel do
   def handle_in("remove_item", %{"id" => item_id}, socket) do
     item =
       socket.assigns.game
-      |> Ecto.Model.assoc(:items)
+      |> Ecto.assoc(:items)
       |> Repo.get(item_id)
 
     case Repo.delete(item) do
@@ -42,7 +42,7 @@ defmodule WhiteElephantWeb.GameChannel do
   def handle_in("steal_item", %{"id" => item_id}, socket) do
     item =
       socket.assigns.game
-      |> Ecto.Model.assoc(:items)
+      |> Ecto.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)
 
@@ -59,7 +59,7 @@ defmodule WhiteElephantWeb.GameChannel do
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
     item =
       socket.assigns.game
-      |> Ecto.Model.assoc(:items)
+      |> Ecto.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)
 

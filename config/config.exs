@@ -6,11 +6,10 @@
 use Mix.Config
 
 # Configures the endpoint
-config :white_elephant, WhiteElephant.Endpoint,
+config :white_elephant, WhiteElephantWeb.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
   secret_key_base: "asWA2RE+lDAP/iwIsZVKFfFwi8bBttbQe3J09GtcOtj5C0uqZshXW0TQTOfwDgtD",
-  render_errors: [accepts: ~w(html json)],
+  render_errors: [view: WhiteElephantWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: WhiteElephant.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

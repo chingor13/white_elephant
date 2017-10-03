@@ -5,17 +5,17 @@ defmodule WhiteElephantWeb.ErrorViewTest do
   import Phoenix.View
 
   test "renders 404.html" do
-    assert render_to_string(WhiteElephant.ErrorView, "404.html", []) ==
+    assert render_to_string(WhiteElephantWeb.ErrorView, "404.html", []) ==
            "Page not found"
   end
 
   test "render 500.html" do
-    assert render_to_string(WhiteElephant.ErrorView, "500.html", []) ==
-           "Server internal error"
+    assert render_to_string(WhiteElephantWeb.ErrorView, "500.html", []) ==
+           "Internal server error"
   end
 
   test "render any other" do
-    assert render_to_string(WhiteElephant.ErrorView, "505.html", []) ==
-           "Server internal error"
+    assert render_to_string(WhiteElephantWeb.ErrorView, "505.html", []) ==
+           "Internal server error"
   end
 end

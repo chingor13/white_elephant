@@ -10,17 +10,18 @@ config :white_elephant, WhiteElephant.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  cache_static_lookup: false,
   check_origin: false,
-  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin"]]
+  watchers: [node: ["node_modules/brunch/bin/brunch", "watch", "--stdin",
+                    cd: Path.expand("../assets", __DIR__)]]
 
 # Watch static and templates for browser reloading.
-config :white_elephant, WhiteElephant.Endpoint,
+config :white_elephant, WhiteElephantWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
-      ~r{web/views/.*(ex)$},
-      ~r{web/templates/.*(eex)$}
+      ~r{priv/gettext/.*(po)$},
+      ~r{lib/white_elephant_web/views/.*(ex)$},
+      ~r{lib/white_elephant_web/templates/.*(eex)$}
     ]
   ]
 
