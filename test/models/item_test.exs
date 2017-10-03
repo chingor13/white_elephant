@@ -1,5 +1,5 @@
-defmodule WhiteElephant.ItemTest do
-  use WhiteElephant.ModelCase
+defmodule WhiteElephantWeb.ItemTest do
+  use WhiteElephant.DataCase
 
   alias WhiteElephant.Item
 
