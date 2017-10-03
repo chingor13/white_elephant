@@ -1,5 +1,5 @@
 defmodule WhiteElephant.GameView do
-  use WhiteElephant.Web, :view
+  use WhiteElephantWeb, :view
 
   def render("items.json", %{game: game}) do
     WhiteElephant.ItemView.render("index.json", items: game.items)

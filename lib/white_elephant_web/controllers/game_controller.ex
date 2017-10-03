@@ -1,5 +1,5 @@
 defmodule WhiteElephant.GameController do
-  use WhiteElephant.Web, :controller
+  use WhiteElephantWeb, :controller
   use Timex
 
   alias WhiteElephant.Game

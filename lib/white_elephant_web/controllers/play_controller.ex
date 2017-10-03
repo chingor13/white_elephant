@@ -1,5 +1,5 @@
 defmodule WhiteElephant.PlayController do
-  use WhiteElephant.Web, :controller
+  use WhiteElephantWeb, :controller
 
   alias WhiteElephant.Game
 

@@ -7,7 +7,7 @@ defmodule WhiteElephant.Mixfile do
       version: "0.1.0",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix] ++ Mix.compilers,
+      compilers: [:phoenix, :gettext] ++ Mix.compilers,
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
@@ -20,16 +20,14 @@ defmodule WhiteElephant.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {WhiteElephant, []},
-      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
-                     :phoenix_ecto, :postgrex, :timex, :tzdata,
-                     :edeliver]
+      mod: {WhiteElephant.Application, []},
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
-  defp elixirc_paths(_),     do: ["lib", "web"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
   #

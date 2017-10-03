@@ -1,5 +1,5 @@
-defmodule WhiteElephant.GameChannel do
-  use WhiteElephant.Web, :channel
+defmodule WhiteElephantWeb.GameChannel do
+  use WhiteElephantWeb, :channel
 
   def join("games:" <> game_id, _params, socket) do
     game = Repo.get(WhiteElephant.Game, game_id)
@@ -50,7 +50,7 @@ defmodule WhiteElephant.GameChannel do
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
-    end    
+    end
   end
 
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
@@ -66,7 +66,7 @@ defmodule WhiteElephant.GameChannel do
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
-    end  
+    end
   end
 
   # This is invoked every time a notification is being broadcast

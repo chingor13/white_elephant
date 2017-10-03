@@ -1,5 +1,5 @@
 defmodule WhiteElephant.Router do
-  use WhiteElephant.Web, :router
+  use WhiteElephantWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]

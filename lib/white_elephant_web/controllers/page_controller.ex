@@ -1,5 +1,5 @@
 defmodule WhiteElephant.PageController do
-  use WhiteElephant.Web, :controller
+  use WhiteElephantWeb, :controller
 
   def index(conn, _params) do
     render conn, "index.html"

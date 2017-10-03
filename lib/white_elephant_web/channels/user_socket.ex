@@ -1,8 +1,8 @@
-defmodule WhiteElephant.UserSocket do
+defmodule WhiteElephantWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "games:*", WhiteElephant.GameChannel
+  channel "games:*", WhiteElephantWeb.GameChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
