@@ -1,5 +1,5 @@
 defmodule WhiteElephant.Game do
-  use Ecto.Schema
+  use WhiteElephant.Schema
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
@@ -13,7 +13,6 @@ defmodule WhiteElephant.Game do
   end
 
   @required_fields ~w(name max_steals date)a
-  @optional_fields ~w()
 
   def by_code(query, code) do
     from g in query,

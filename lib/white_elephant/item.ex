@@ -1,5 +1,5 @@
 defmodule WhiteElephant.Item do
-  use Ecto.Schema
+  use WhiteElephant.Schema
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
