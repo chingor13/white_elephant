@@ -1,11 +1,13 @@
 defmodule WhiteElephant.Item do
-  use WhiteElephant.Web, :model
+  use Ecto.Schema
+  import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   schema "items" do
     belongs_to :game, WhiteElephant.Game
     field :name, :string
     field :steals, :integer, default: 0
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name)

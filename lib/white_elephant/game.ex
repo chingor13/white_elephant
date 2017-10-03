@@ -1,13 +1,15 @@
 defmodule WhiteElephant.Game do
-  use WhiteElephant.Web, :model
+  use Ecto.Schema
+  import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   schema "games" do
     field :name, :string
     field :code, :string
     field :max_steals, :integer
-    field :date, Ecto.Date
+    field :date, :date
     has_many :items, WhiteElephant.Item, on_delete: :delete_all
-    timestamps
+    timestamps()
   end
 
   @required_fields ~w(name max_steals date)

@@ -10,8 +10,9 @@ defmodule WhiteElephantWeb.GameChannel do
   # and then notify other people
   def handle_in("create_item", params, socket) do
     game = socket.assigns.game
-    changeset = game
-      |> build(:items)
+    changeset =
+      game
+      |> Ecto.build_assoc(:items)
       |> WhiteElephant.Item.changeset(params)
 
     case Repo.insert(changeset) do
@@ -24,7 +25,8 @@ defmodule WhiteElephantWeb.GameChannel do
   end
 
   def handle_in("remove_item", %{"id" => item_id}, socket) do
-    item = socket.assigns.game
+    item =
+      socket.assigns.game
       |> Ecto.Model.assoc(:items)
       |> Repo.get(item_id)
 
@@ -38,7 +40,8 @@ defmodule WhiteElephantWeb.GameChannel do
   end
 
   def handle_in("steal_item", %{"id" => item_id}, socket) do
-    item = socket.assigns.game
+    item =
+      socket.assigns.game
       |> Ecto.Model.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)
@@ -54,7 +57,8 @@ defmodule WhiteElephantWeb.GameChannel do
   end
 
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
-    item = socket.assigns.game
+    item =
+      socket.assigns.game
       |> Ecto.Model.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)

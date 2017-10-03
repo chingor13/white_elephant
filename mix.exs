@@ -40,10 +40,8 @@ defmodule WhiteElephant.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
-      {:cowboy, "~> 1.0"},
-      {:exrm, "~> 1.0"},
-      {:timex, "~> 3.0"},
-      {:edeliver, "~> 1.2.9"}
+      {:gettext, "~> 0.11"},
+      {:cowboy, "~> 1.0"}
     ]
   end
 
