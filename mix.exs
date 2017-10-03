@@ -8,7 +8,6 @@ defmodule WhiteElephant.Mixfile do
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
-      build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       aliases: aliases(),
       deps: deps()
@@ -45,7 +44,7 @@ defmodule WhiteElephant.Mixfile do
     ]
   end
 
-  # Aliases are shortcut or tasks specific to the current project.
+  # Aliases are shortcuts or tasks specific to the current project.
   # For example, to create, migrate and run the seeds file at once:
   #
   #     $ mix ecto.setup
