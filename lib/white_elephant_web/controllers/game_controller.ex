@@ -1,7 +1,7 @@
 defmodule WhiteElephantWeb.GameController do
   use WhiteElephantWeb, :controller
 
-  alias WhiteElephant.Game
+  alias WhiteElephant.{Game, Repo}
 
   plug :scrub_params, "game" when action in [:create, :update]
 

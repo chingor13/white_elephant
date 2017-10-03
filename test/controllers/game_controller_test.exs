@@ -1,7 +1,7 @@
 defmodule WhiteElephantWeb.GameControllerTest do
   use WhiteElephantWeb.ConnCase
 
-  alias WhiteElephant.Game
+  alias WhiteElephant.{Game, Repo}
   @valid_attrs [name: "Foobar", max_steals: "3", date: "2016-12-14"]
   @invalid_attrs %{}
 
