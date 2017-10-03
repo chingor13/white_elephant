@@ -1,7 +1,7 @@
 defmodule WhiteElephantWeb.PlayController do
   use WhiteElephantWeb, :controller
 
-  alias WhiteElephant.Game
+  alias WhiteElephant.{Game, Repo}
 
   plug :put_layout, "play.html"
 

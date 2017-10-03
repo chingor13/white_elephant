@@ -1,19 +1,19 @@
 defmodule WhiteElephantWeb.ItemController do
   use WhiteElephantWeb, :controller
 
-  alias WhiteElephant.Item
+  alias WhiteElephant.{Item, Repo}
 
   plug :scrub_params, "item" when action in [:create, :update]
   plug :load_game
 
   def new(conn, _params) do
-    item = conn |> get_game |> Ecto.Model.build(:items)
+    item = conn |> get_game |> Ecto.build_assoc(:items)
     changeset = Item.changeset(item)
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"item" => item_params}) do
-    item = conn |> get_game |> Ecto.Model.build(:items)
+    item = conn |> get_game |> Ecto.build_assoc(:items)
     changeset = Item.changeset(item, item_params)
 
     case Repo.insert(changeset) do
