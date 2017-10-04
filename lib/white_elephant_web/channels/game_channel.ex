@@ -1,9 +1,9 @@
 defmodule WhiteElephantWeb.GameChannel do
   use WhiteElephantWeb, :channel
-  alias WhiteElephant.Repo
+  alias WhiteElephant.{Game, Item, Repo}
 
   def join("games:" <> game_id, _params, socket) do
-    game = Repo.get(WhiteElephant.Game, game_id)
+    game = Repo.get(Game, game_id)
     {:ok, assign(socket, :game, game)}
   end
 
@@ -14,7 +14,7 @@ defmodule WhiteElephantWeb.GameChannel do
     changeset =
       game
       |> Ecto.build_assoc(:items)
-      |> WhiteElephant.Item.changeset(params)
+      |> Item.changeset(params)
 
     case Repo.insert(changeset) do
       {:ok, item} ->
@@ -41,13 +41,13 @@ defmodule WhiteElephantWeb.GameChannel do
   end
 
   def handle_in("steal_item", %{"id" => item_id}, socket) do
-    item =
+    changeset =
       socket.assigns.game
       |> Ecto.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)
+      |> Item.increment()
 
-    changeset = WhiteElephant.Item.increment(item)
     case Repo.update(changeset) do
       {:ok, item} ->
         broadcast! socket, "item_updated", Poison.encode!(%{item: item})
@@ -58,13 +58,13 @@ defmodule WhiteElephantWeb.GameChannel do
   end
 
   def handle_in("undo_steal_item", %{"id" => item_id}, socket) do
-    item =
+    changeset =
       socket.assigns.game
       |> Ecto.assoc(:items)
       |> Repo.get(item_id)
       |> Map.put(:game, socket.assigns.game)
+      |> Item.decrement()
 
-    changeset = WhiteElephant.Item.decrement(item)
     case Repo.update(changeset) do
       {:ok, item} ->
         broadcast! socket, "item_updated", Poison.encode!(%{item: item})
