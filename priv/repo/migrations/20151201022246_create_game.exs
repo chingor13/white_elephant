@@ -7,7 +7,7 @@ defmodule WhiteElephant.Repo.Migrations.CreateGame do
       add :code, :string
       add :max_steals, :integer, default: 0
       add :date, :date
-      timestamps
+      timestamps()
     end
 
   end

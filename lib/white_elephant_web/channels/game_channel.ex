@@ -18,7 +18,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.insert(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_created", WhiteElephantWeb.ItemView.render("item.json", %{item: item})
+        broadcast! socket, "item_created", Poison.encode!(%{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -33,7 +33,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.delete(item) do
       {:ok, item} ->
-        broadcast! socket, "item_deleted", WhiteElephantWeb.ItemView.render("item.json", %{item: item})
+        broadcast! socket, "item_deleted", Poison.encode!(%{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -50,7 +50,7 @@ defmodule WhiteElephantWeb.GameChannel do
     changeset = WhiteElephant.Item.increment(item)
     case Repo.update(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_updated", WhiteElephantWeb.ItemView.render("item.json", %{item: item})
+        broadcast! socket, "item_updated", Poison.encode!(%{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -67,7 +67,7 @@ defmodule WhiteElephantWeb.GameChannel do
     changeset = WhiteElephant.Item.decrement(item)
     case Repo.update(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_updated", WhiteElephantWeb.ItemView.render("item.json", %{item: item})
+        broadcast! socket, "item_updated", Poison.encode!(%{item: item})
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}

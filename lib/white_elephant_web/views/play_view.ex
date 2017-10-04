@@ -2,7 +2,6 @@ defmodule WhiteElephantWeb.PlayView do
   use WhiteElephantWeb, :view
 
   def render("items.json", %{game: game}) do
-    WhiteElephantWeb.ItemView.render("index.json", items: game.items)
-      |> Poison.encode!
+    Poison.encode!(%{items: game.items})
   end
 end

@@ -29,7 +29,9 @@ defmodule WhiteElephantWeb.GameController do
   end
 
   def show(conn, %{"id" => id}) do
-    game = Repo.get!(Game, id)
+    game =
+      Game
+      |> Repo.get!(id)
       |> Repo.preload(:items)
     render(conn, "show.html", game: game)
   end

@@ -6,7 +6,7 @@ defmodule WhiteElephant.Repo.Migrations.CreateItem do
       add :game_id, references(:games)
       add :name, :string
       add :steals, :integer, default: 0
-      timestamps
+      timestamps()
     end
 
   end

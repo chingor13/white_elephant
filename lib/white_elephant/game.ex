@@ -3,6 +3,8 @@ defmodule WhiteElephant.Game do
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
+  # @derive [Poison.Encoder]
+
   schema "games" do
     field :name, :string
     field :code, :string
@@ -19,6 +21,9 @@ defmodule WhiteElephant.Game do
       where: g.code == ^code
   end
 
+  def unlimited_steals?(%{max_steals: 0}),  do: true
+  def unlimited_steals?(_),                 do: false
+
   @doc """
   Creates a changeset based on the `model` and `params`.
 
@@ -29,14 +34,11 @@ defmodule WhiteElephant.Game do
     model
     |> cast(params, @required_fields)
     |> validate_required(@required_fields)
-    |> set_default_code
+    |> set_default_code()
     |> validate_length(:name, min: 1, max: 100)
     |> validate_number(:max_steals, greater_than_or_equal_to: 0)
   end
 
-  @doc """
-  Generates a random code for the model if one isn't already set
-  """
   defp set_default_code(changeset) do
     case fetch_field(changeset, :code) do
       {:data, nil} ->
@@ -45,5 +47,13 @@ defmodule WhiteElephant.Game do
         changeset
     end
   end
+end
 
+defimpl Poison.Encoder, for: WhiteElephant.Game do
+  def encode(value, options) do
+    value
+    |> Map.take([:id, :name, :max_steals, :items])
+    |> Map.put(:items, Enum.map(value.items, &Poison.Encoder.encode(&1, options)))
+    |> Poison.Encoder.encode(options)
+  end
 end

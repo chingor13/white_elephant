@@ -6,16 +6,18 @@ defmodule WhiteElephantWeb.PlayController do
   plug :put_layout, "play.html"
 
   def play(conn, %{"game_code" => game_code}) do
-    with query <- Game.by_code(Game, game_code),
-         game = %Game{} <- Repo.one(query),
-         game = Repo.preload(game, :items)
-    do
-      render conn, "play.html", game: game
-    else
-      _ ->
+    require Ecto.Query
+    Game
+    |> Game.by_code(game_code)
+    |> Ecto.Query.preload(:items)
+    |> Repo.one
+    |> case do
+      nil ->
         conn
         |> put_flash(:error, "Could not find game '#{game_code}'")
         |> redirect(to: game_path(conn, :index))
+      game ->
+        render conn, "play.html", game: game
     end
   end
 end

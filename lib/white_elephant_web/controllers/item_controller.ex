@@ -7,13 +7,20 @@ defmodule WhiteElephantWeb.ItemController do
   plug :load_game
 
   def new(conn, _params) do
-    item = conn |> get_game |> Ecto.build_assoc(:items)
+    item =
+      conn
+      |> get_game()
+      |> Ecto.build_assoc(:items)
+
     changeset = Item.changeset(item)
     render(conn, "new.html", changeset: changeset)
   end
 
   def create(conn, %{"item" => item_params}) do
-    item = conn |> get_game |> Ecto.build_assoc(:items)
+    item =
+      conn
+      |> get_game()
+      |> Ecto.build_assoc(:items)
     changeset = Item.changeset(item, item_params)
 
     case Repo.insert(changeset) do
@@ -27,13 +34,13 @@ defmodule WhiteElephantWeb.ItemController do
   end
 
   def edit(conn, %{"id" => _id}) do
-    item = conn |> find_item
+    item = find_item(conn)
     changeset = Item.changeset(item)
     render(conn, "edit.html", item: item, changeset: changeset)
   end
 
   def update(conn, %{"id" => _id, "item" => item_params}) do
-    item = conn |> find_item
+    item = find_item(conn)
     changeset = Item.changeset(item, item_params)
 
     case Repo.update(changeset) do
@@ -47,7 +54,7 @@ defmodule WhiteElephantWeb.ItemController do
   end
 
   def delete(conn, %{"id" => _id}) do
-    item = conn |> find_item
+    item = find_item(conn)
 
     # Here we use delete! (with a bang) because we expect
     # it to always work (and if it does not, it will raise).
@@ -61,20 +68,19 @@ defmodule WhiteElephantWeb.ItemController do
   defp load_game(conn, _) do
     game = Repo.get!(WhiteElephant.Game, conn.params["game_id"])
 
-    conn
-      |> assign(:game, game)
+    assign(conn, :game, game)
   end
 
   defp get_game(conn) do
     conn.assigns[:game]
   end
 
-  defp find_item(conn) do
-    import Ecto.Query, only: [from: 2]
+  defp find_item(conn = %{params: %{"id" => id}}) do
     game = get_game(conn)
-    id = conn.params["id"]
-    (from i in Item, where: i.id == ^id)
-      |> Item.for_game(game)
-      |> Repo.one!
+
+    Item
+    |> Item.by_id(id)
+    |> Item.for_game(game)
+    |> Repo.one!
   end
 end

@@ -1,9 +1,9 @@
 defmodule StringGenerator do
-  @chars "ABCDEFGHJKLMNPQRSTUVWXYZ23456789" |> String.split("")
+  @chars "ABCDEFGHJKLMNPQRSTUVWXYZ23456789" |> String.codepoints()
 
   def string_of_length(length) do
-    Enum.reduce((1..length), [], fn (_i, acc) ->
-      [Enum.random(@chars) | acc]
-    end) |> Enum.join("")
+    (1..length)
+    |> Enum.map(fn (_) -> Enum.random(@chars) end)
+    |> Enum.join("")
   end
 end
