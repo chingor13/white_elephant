@@ -59,7 +59,7 @@ class GameList extends React.Component {
           </thead>
           <tbody>
             {this.state.items.map((item, i) =>
-              <GameLine channel={this.channel} itemId={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
+              <GameLine key={item.id} channel={this.channel} itemId={item.id} name={item.name} steals={item.steals} maxSteals={this.maxSteals}/>
             )}
           </tbody>
         </table>
