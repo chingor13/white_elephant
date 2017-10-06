@@ -110,7 +110,7 @@ class GameLine extends React.Component {
         </td>
         <td className="text-right">
           <button className="btn btn-xs btn-danger" onClick={this.delete}>
-            <span className="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <span className="glyphicon glyphicon-trash" aria-hidden="true"/>
           </button>
         </td>
       </tr>
@@ -143,7 +143,7 @@ class GameLineIncrementer extends React.Component {
   render() {
     return (
       <button className={classNames("btn", "btn-xs", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick}>
-        <span className="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        <span className="glyphicon glyphicon-plus" aria-hidden="true"/>
       </button>
     )
   }
@@ -174,7 +174,7 @@ class GameLineDecrementer extends React.Component {
   render() {
     return (
       <button className={classNames("btn", "btn-xs", "btn-default", this.state.shouldRender ? '' : 'invisible')} onClick={this.handleClick}>
-        <span className="glyphicon glyphicon-minus" aria-hidden="true"></span>
+        <span className="glyphicon glyphicon-minus" aria-hidden="true"/>
       </button>
     )
   }
