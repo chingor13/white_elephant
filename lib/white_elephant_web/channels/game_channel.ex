@@ -18,7 +18,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.insert(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_created", Poison.encode!(%{item: item})
+        broadcast! socket, "item_created", item
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -33,7 +33,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.delete(item) do
       {:ok, item} ->
-        broadcast! socket, "item_deleted", Poison.encode!(%{item: item})
+        broadcast! socket, "item_deleted", item
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -50,7 +50,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.update(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_updated", Poison.encode!(%{item: item})
+        broadcast! socket, "item_updated", item
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
@@ -67,7 +67,7 @@ defmodule WhiteElephantWeb.GameChannel do
 
     case Repo.update(changeset) do
       {:ok, item} ->
-        broadcast! socket, "item_updated", Poison.encode!(%{item: item})
+        broadcast! socket, "item_updated", item
         {:reply, :ok, socket}
       {:error, changeset} ->
         {:reply, {:error, %{errors: changeset}}, socket}
