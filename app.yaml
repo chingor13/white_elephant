@@ -1,9 +1,7 @@
-runtime: custom
 env: flex
+runtime: gs://elixir-runtime/elixir.yaml
 
 service: we
 
-env_variables:
-  PGUSER: web
-  PGPASSWORD: webpassword
-  PGHOST: 35.188.137.109
+beta_settings:
+  cloud_sql_instances: chingor-php-gcs:us-central1:postgres-1
