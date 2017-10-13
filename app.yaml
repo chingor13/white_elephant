@@ -1,0 +1,7 @@
+env: flex
+runtime: gs://elixir-runtime/elixir.yaml
+
+service: we
+
+beta_settings:
+  cloud_sql_instances: chingor-php-gcs:us-central1:postgres-1
