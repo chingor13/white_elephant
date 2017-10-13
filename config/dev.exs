@@ -51,8 +51,8 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :white_elephant, WhiteElephant.Repo,
   adapter: Ecto.Adapters.Postgres,
+  database: "white_elephant_dev",
   username: "postgres",
   password: "postgres",
-  database: "white_elephant_dev",
-  hostname: "localhost",
+  socket: "/cloudsql/chingor-php-gcs:us-central1:postgres-1",
   pool_size: 10

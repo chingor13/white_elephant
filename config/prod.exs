@@ -15,8 +15,8 @@ use Mix.Config
 # which you typically run after static files are built.
 config :white_elephant, WhiteElephantWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "we.chingr.com", port: 8080],
-  cache_static_manifest: "priv/static/cache_manifest.json",
+  url: [host: "we-dot-chingor-php-gcs.appspot.com", port: 8080],
+  cache_static_manifest: "priv/static/cache_manifest.json"
   server: true
 
 # Do not print debug messages in production

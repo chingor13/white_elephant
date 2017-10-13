@@ -1,0 +1,9 @@
+runtime: custom
+env: flex
+
+service: we
+
+env_variables:
+  PGUSER: web
+  PGPASSWORD: webpassword
+  PGHOST: 35.188.137.109

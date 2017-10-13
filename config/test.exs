@@ -15,5 +15,5 @@ config :white_elephant, WhiteElephant.Repo,
   username: "postgres",
   password: "postgres",
   database: "white_elephant_test",
-  hostname: "localhost",
+  hostname: "/cloud_sql_proxy/chingor-php-gcs:us-central1:postgres-1",
   pool: Ecto.Adapters.SQL.Sandbox
