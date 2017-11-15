@@ -25,7 +25,7 @@ config :white_elephant, WhiteElephantWeb.Endpoint,
   server: true,
   secret_key_base: "${SECRET_KEY_BASE}"
 
-config :white_elephant, WhiteElephantWeb.Repo,
+config :white_elephant, WhiteElephant.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: "${DATABASE_URL}",
   database: "white_elephant",
